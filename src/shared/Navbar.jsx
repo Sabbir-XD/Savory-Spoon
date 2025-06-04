@@ -2,9 +2,11 @@ import React from "react";
 import { Link, NavLink } from "react-router";
 import logo from "../../src/assets/image/logo.png";
 import useAuth from "../Hooks/useAuth";
+import { FaGoogle } from "react-icons/fa";
 
 const Navbar = () => {
-  const {name} = useAuth();
+  const { user, handleLogoutUser } = useAuth();
+  console.log("user in nav", user);
   const links = (
     <>
       <li>
@@ -107,46 +109,56 @@ const Navbar = () => {
           </svg>
         </label>
 
-        <div className="dropdown dropdown-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost btn-circle avatar hover:ring-amber-500 dark:hover:ring-amber-400 transition-all"
-          >
-            <div className="w-10 rounded-full ring ring-gray-300 dark:ring-gray-600 ring-offset-2 ring-offset-white/80 dark:ring-offset-gray-800/80 hover:ring-amber-500 dark:hover:ring-amber-400 transition-all">
-              <img
-                src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp"
-                alt="User Profile"
-              />
+        {user ? (
+          <div className="dropdown dropdown-end">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle avatar hover:ring-amber-500 dark:hover:ring-amber-400 transition-all"
+            >
+              <div className="w-10 rounded-full ring ring-gray-300 dark:ring-gray-600 ring-offset-2 ring-offset-white/80 dark:ring-offset-gray-800/80 hover:ring-amber-500 dark:hover:ring-amber-400 transition-all">
+                <img
+                  src={user.photoURL || userImage}
+                  alt="User Profile"
+                />
+              </div>
             </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-white/95 dark:bg-gray-700/95 rounded-box w-52 backdrop-blur-md"
+            >
+              <li>
+                <NavLink
+                  to="/AddFood"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-amber-600 font-semibold dark:text-amber-400"
+                      : "hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
+                  }
+                >
+                  Add Food
+                </NavLink>
+              </li>
+            </ul>
           </div>
-          <ul
-            tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-white/95 dark:bg-gray-700/95 rounded-box w-52 backdrop-blur-md"
+        ) : (
+          ""
+        )}
+        {user ? (
+          <button
+            onClick={handleLogoutUser}
+            className="btn bg-amber-600 hover:bg-amber-700 border-amber-600 hover:border-amber-700 text-white dark:bg-amber-500 dark:hover:bg-amber-600 dark:border-amber-500 dark:hover:border-amber-600 transition-all shadow-md"
           >
-            <li>
-              <a className="hover:bg-amber-500/10 dark:hover:bg-amber-400/20">
-                Profile
-              </a>
-            </li>
-            <li>
-              <a className="hover:bg-amber-500/10 dark:hover:bg-amber-400/20">
-                Settings
-              </a>
-            </li>
-            <li>
-              <a className="hover:bg-amber-500/10 dark:hover:bg-amber-400/20">
-                Logout
-              </a>
-            </li>
-          </ul>
-        </div>
-        <Link
-          to="/login"
-          className="btn bg-amber-600 hover:bg-amber-700 border-amber-600 hover:border-amber-700 text-white dark:bg-amber-500 dark:hover:bg-amber-600 dark:border-amber-500 dark:hover:border-amber-600 transition-all shadow-md"
-        >
-          Log In
-        </Link>
+            Logout
+          </button>
+        ) : (
+          <Link
+            to="/login"
+            className="btn bg-amber-600 hover:bg-amber-700 border-amber-600 hover:border-amber-700 text-white dark:bg-amber-500 dark:hover:bg-amber-600 dark:border-amber-500 dark:hover:border-amber-600 transition-all shadow-md"
+          >
+            Log In
+          </Link>
+        )}
       </div>
     </div>
   );

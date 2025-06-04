@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import {
   FaGoogle,
   FaGithub,
@@ -16,6 +16,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { handleLoginUser, handleGoogleLoginUser } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -35,7 +36,7 @@ const Login = () => {
           icon: "success",
           draggable: true,
         });
-        navigate("/");
+        navigate(location?.state || "/");
       })
       .catch((error) => {
         console.error(error.message);
@@ -56,7 +57,7 @@ const Login = () => {
           showConfirmButton: false,
           timer: 2000,
         });
-        navigate("/");
+        navigate(location?.state || "/");
       })
       .catch((error) => {
         console.error(error.message);

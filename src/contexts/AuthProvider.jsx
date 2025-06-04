@@ -7,8 +7,11 @@ import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signInWithPopup,
+  signOut,
   updateProfile,
 } from "firebase/auth";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -35,6 +38,23 @@ const AuthProvider = ({ children }) => {
     return signInWithEmailAndPassword(auth, email, password);
   };
 
+  const handleLogoutUser = () => {
+    setLoading(true);
+    return signOut(auth)
+      .then(() => {
+        setUser(null);
+        Swal.fire({
+          title: "Logout Successfully!",
+          icon: "success",
+          draggable: true,
+        });
+      })
+      .catch((error) => {
+        console.error("Error signing out:", error);
+        toast.error("Error signing out:", error);
+      });
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       console.log(currentUser);
@@ -52,6 +72,7 @@ const AuthProvider = ({ children }) => {
     handleUpdateProfile,
     handleLoginUser,
     handleGoogleLoginUser,
+    handleLogoutUser,
   };
   return <AuthContext value={userInfo}>{children}</AuthContext>;
 };

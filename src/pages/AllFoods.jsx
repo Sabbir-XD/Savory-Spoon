@@ -1,9 +1,10 @@
 import React from 'react';
+import BackgroundTitle from '../components/BackgroundTitle';
 
 const AllFoods = () => {
     return (
         <div>
-            all foods page
+            <BackgroundTitle />
         </div>
     );
 };

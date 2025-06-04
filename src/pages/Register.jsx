@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import {
   FaUser,
   FaEnvelope,
@@ -25,6 +25,7 @@ const Register = () => {
     setUser,
     handleGoogleLoginUser,
   } = useAuth();
+  const location = useLocation();
 
   const validatePassword = (password) => {
     const errors = [];
@@ -92,7 +93,7 @@ const Register = () => {
           showConfirmButton: false,
           timer: 2000,
         });
-        navigate("/login");
+        navigate(location?.state || "/login");
       })
       .catch((error) => {
         const errorMessage = error.message;
@@ -114,7 +115,7 @@ const Register = () => {
           showConfirmButton: false,
           timer: 2000,
         });
-        navigate("/");
+        navigate(location?.state || "/");
       })
       .catch((error) => {
         console.error(error.message);
@@ -122,14 +123,6 @@ const Register = () => {
       });
   };
 
-/*************  ✨ Windsurf Command ⭐  *************/
-/**
- * Initiates the GitHub login process using an OAuth provider.
- * On successful login, navigates the user to the home page.
- * In case of an error, logs the error message and displays a toast notification.
- */
-
-/*******  431e9f0a-4613-43e6-b822-1861a2087733  *******/
   const handleGithubLogin = () => {
     // GitHub login logic
   };
