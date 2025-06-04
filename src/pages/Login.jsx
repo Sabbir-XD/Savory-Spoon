@@ -1,33 +1,72 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router';
-import { FaGoogle, FaGithub, FaEnvelope, FaLock, FaEye, FaEyeSlash } from 'react-icons/fa';
-import logo from '../../src/assets/image/logo.png';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router";
+import {
+  FaGoogle,
+  FaGithub,
+  FaEnvelope,
+  FaLock,
+  FaEye,
+  FaEyeSlash,
+} from "react-icons/fa";
+import useAuth from "../Hooks/useAuth";
+import Swal from "sweetalert2";
+import { toast } from "react-toastify";
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
+  const { handleLoginUser, handleGoogleLoginUser } = useAuth();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle login logic
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    console.log(email, password);
+
+    // You can add your login logic here
+    handleLoginUser(email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log(user);
+        Swal.fire({
+          title: "Login Successfully!",
+          icon: "success",
+          draggable: true,
+        });
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error(error.message);
+        toast.error(error.message);
+      });
   };
 
   const handleGoogleLogin = () => {
-    // Google login logic
-  };
+    handleGoogleLoginUser()
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
 
-  const handleGithubLogin = () => {
-    // GitHub login logic
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Google login successful",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error(error.message);
+        toast.error(error.message);
+      });
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 to-amber-200 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="flex justify-center">
-          <img className="w-20 h-auto" src={logo} alt="Savory Spoon Logo" />
-        </div>
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Welcome Back
         </h2>
@@ -40,7 +79,10 @@ const Login = () => {
         <div className="bg-white py-8 px-6 shadow-lg rounded-lg sm:px-10 border border-gray-200">
           <form className="mb-0 space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Email address
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -53,8 +95,6 @@ const Login = () => {
                   type="email"
                   autoComplete="email"
                   required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
                   className="focus:ring-amber-500 focus:border-amber-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md text-gray-900 placeholder-gray-400"
                   placeholder="your@email.com"
                 />
@@ -62,7 +102,10 @@ const Login = () => {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Password
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -75,8 +118,6 @@ const Login = () => {
                   type={showPassword ? "text" : "password"}
                   autoComplete="current-password"
                   required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
                   className="focus:ring-amber-500 focus:border-amber-500 block w-full pl-10 pr-10 py-3 border-gray-300 rounded-md text-gray-900 placeholder-gray-400"
                   placeholder="••••••••"
                 />
@@ -100,19 +141,22 @@ const Login = () => {
               <div className="flex items-center">
                 <input
                   id="remember-me"
-                  name="remember-me"
                   type="checkbox"
-                  checked={rememberMe}
-                  onChange={(e) => setRememberMe(e.target.checked)}
                   className="h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300 rounded"
                 />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
+                <label
+                  htmlFor="remember-me"
+                  className="ml-2 block text-sm text-gray-700"
+                >
                   Remember me
                 </label>
               </div>
 
               <div className="text-sm">
-                <a href="#" className="font-medium text-amber-600 hover:text-amber-500">
+                <a
+                  href="#"
+                  className="font-medium text-amber-600 hover:text-amber-500"
+                >
                   Forgot password?
                 </a>
               </div>
@@ -148,10 +192,7 @@ const Login = () => {
                 <FaGoogle className="h-5 w-5 text-red-500 mr-2" />
                 Google
               </button>
-              <button
-                onClick={handleGithubLogin}
-                className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-all duration-300"
-              >
+              <button className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-all duration-300">
                 <FaGithub className="h-5 w-5 text-gray-800 mr-2" />
                 GitHub
               </button>
@@ -160,7 +201,7 @@ const Login = () => {
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
-              Don't have an account?{' '}
+              Don't have an account?{" "}
               <Link
                 to="/register"
                 className="font-medium text-amber-600 hover:text-amber-500 transition-colors"

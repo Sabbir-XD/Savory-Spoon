@@ -10,10 +10,10 @@ import {
   FaArrowRight,
 } from "react-icons/fa";
 
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+
 
 const Banner = () => {
   const banners = [
@@ -78,8 +78,8 @@ const Banner = () => {
         pagination={{
           clickable: true,
           el: ".custom-pagination",
-          bulletClass: "custom-bullet",
-          bulletActiveClass: "custom-bullet-active",
+          bulletClass: "tailwind-bullet",
+          bulletActiveClass: "tailwind-bullet-active",
         }}
         navigation={{
           nextEl: ".custom-next",
@@ -131,7 +131,7 @@ const Banner = () => {
       </Swiper>
 
       {/* Custom Pagination */}
-      <div className="custom-pagination absolute bottom-8 left-1/2 transform -translate-x-1/2 z-10 flex gap-2"></div>
+      <div className="custom-pagination absolute bottom-8 left-1/2 -translate-x-1/2 transform z-10 flex gap-2"></div>
 
       {/* Custom Navigation */}
       <button className="custom-prev absolute left-6 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 text-white p-3 rounded-full backdrop-blur-sm transition-all duration-300 opacity-0 group-hover:opacity-100">
@@ -166,24 +166,6 @@ const Banner = () => {
           />
         </svg>
       </button>
-
-      {/* Custom CSS for pagination */}
-      <style jsx>{`
-        :global(.custom-bullet) {
-          width: 12px;
-          height: 12px;
-          display: inline-block;
-          border-radius: 50%;
-          background: rgba(255, 255, 255, 0.5);
-          margin: 0 4px;
-          cursor: pointer;
-          transition: all 0.3s;
-        }
-        :global(.custom-bullet-active) {
-          background: white;
-          transform: scale(1.3);
-        }
-      `}</style>
     </div>
   );
 };

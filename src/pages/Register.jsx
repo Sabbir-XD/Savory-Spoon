@@ -1,65 +1,73 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router';
-import { FaUser, FaEnvelope, FaLock, FaEye, FaEyeSlash, FaCamera, FaGithub, FaGoogle } from 'react-icons/fa';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router";
+import {
+  FaUser,
+  FaEnvelope,
+  FaLock,
+  FaEye,
+  FaEyeSlash,
+  FaCamera,
+  FaGithub,
+  FaGoogle,
+} from "react-icons/fa";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import useAuth from "../Hooks/useAuth";
+import Swal from "sweetalert2";
 
 const Register = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    photoURL: '',
-    password: '',
-  });
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
-  };
+  const {
+    handleCreateUser,
+    handleUpdateProfile,
+    setUser,
+    handleGoogleLoginUser,
+  } = useAuth();
 
   const validatePassword = (password) => {
     const errors = [];
     if (password.length < 6) {
-      errors.push('Password must be at least 6 characters');
+      errors.push("Password must be at least 6 characters");
     }
     if (!/[A-Z]/.test(password)) {
-      errors.push('Password must contain at least one uppercase letter');
+      errors.push("Password must contain at least one uppercase letter");
     }
     if (!/[a-z]/.test(password)) {
-      errors.push('Password must contain at least one lowercase letter');
+      errors.push("Password must contain at least one lowercase letter");
     }
     return errors;
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+    const form = e.target;
+    const formData = new FormData(form);
+    const { name, email, password, photoURL } = Object.fromEntries(
+      formData.entries()
+    );
+    console.log(name, email, password, photoURL);
     // Validate form
     const newErrors = {};
-    if (!formData.name) newErrors.name = 'Name is required';
-    if (!formData.email) newErrors.email = 'Email is required';
-    if (!formData.password) {
-      newErrors.password = 'Password is required';
+    if (!name) newErrors.name = "Name is required";
+    if (!email) newErrors.email = "Email is required";
+    if (!password) {
+      newErrors.password = "Password is required";
     } else {
-      const passwordErrors = validatePassword(formData.password);
+      const passwordErrors = validatePassword(password);
       if (passwordErrors.length > 0) {
         newErrors.password = passwordErrors;
       }
     }
 
-
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      
+
       // Show error toast for each error
-      Object.values(newErrors).forEach(error => {
+      Object.values(newErrors).forEach((error) => {
         if (Array.isArray(error)) {
-          error.forEach(err => toast.error(err));
+          error.forEach((err) => toast.error(err));
         } else {
           toast.error(error);
         }
@@ -68,21 +76,60 @@ const Register = () => {
     }
 
     // Registration logic would go here
-    console.log('Registration data:', formData);
-    
-    // Show success toast
-    toast.success('Registration successful! Redirecting to login...');
-    
-    // Simulate registration process
-    setTimeout(() => {
-      navigate('/login');
-    }, 2000);
+    handleCreateUser(email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+
+        handleUpdateProfile({ displayName: name, photoURL: photoURL });
+        setUser({ ...user, displayName: name, photoURL: photoURL });
+
+        // Registration successful
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Registration successful",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        navigate("/login");
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        setErrors({ password: errorMessage });
+      });
   };
 
   const handleGoogleLogin = () => {
     // Google login logic
+    handleGoogleLoginUser()
+      .then((result) => {
+        const user = result.user;
+        console.log(user);
+
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Google login successful",
+          showConfirmButton: false,
+          timer: 2000,
+        });
+        navigate("/");
+      })
+      .catch((error) => {
+        console.error(error.message);
+        toast.error(error.message);
+      });
   };
 
+/*************  ✨ Windsurf Command ⭐  *************/
+/**
+ * Initiates the GitHub login process using an OAuth provider.
+ * On successful login, navigates the user to the home page.
+ * In case of an error, logs the error message and displays a toast notification.
+ */
+
+/*******  431e9f0a-4613-43e6-b822-1861a2087733  *******/
   const handleGithubLogin = () => {
     // GitHub login logic
   };
@@ -90,7 +137,7 @@ const Register = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-amber-50 to-amber-200 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <ToastContainer position="top-center" autoClose={3000} />
-      
+
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
           Create Your Account
@@ -105,7 +152,10 @@ const Register = () => {
           <form className="mb-0 space-y-6" onSubmit={handleSubmit}>
             {/* Name Field */}
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Full Name
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -118,18 +168,23 @@ const Register = () => {
                   type="text"
                   autoComplete="name"
                   required
-                  value={formData.name}
-                  onChange={handleChange}
-                  className={`focus:ring-amber-500 focus:border-amber-500 block w-full pl-10 pr-3 py-3 ${errors.name ? 'border-red-300' : 'border-gray-300'} rounded-md text-gray-900 placeholder-gray-400`}
+                  className={`focus:ring-amber-500 focus:border-amber-500 block w-full pl-10 pr-3 py-3 ${
+                    errors.name ? "border-red-300" : "border-gray-300"
+                  } rounded-md text-gray-900 placeholder-gray-400`}
                   placeholder="John Doe"
                 />
               </div>
-              {errors.name && <p className="mt-1 text-sm text-red-600">{errors.name}</p>}
+              {errors.name && (
+                <p className="mt-1 text-sm text-red-600">{errors.name}</p>
+              )}
             </div>
 
             {/* Email Field */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Email address
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -142,18 +197,23 @@ const Register = () => {
                   type="email"
                   autoComplete="email"
                   required
-                  value={formData.email}
-                  onChange={handleChange}
-                  className={`focus:ring-amber-500 focus:border-amber-500 block w-full pl-10 pr-3 py-3 ${errors.email ? 'border-red-300' : 'border-gray-300'} rounded-md text-gray-900 placeholder-gray-400`}
+                  className={`focus:ring-amber-500 focus:border-amber-500 block w-full pl-10 pr-3 py-3 ${
+                    errors.email ? "border-red-300" : "border-gray-300"
+                  } rounded-md text-gray-900 placeholder-gray-400`}
                   placeholder="your@email.com"
                 />
               </div>
-              {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
+              {errors.email && (
+                <p className="mt-1 text-sm text-red-600">{errors.email}</p>
+              )}
             </div>
 
             {/* Photo URL Field */}
             <div>
-              <label htmlFor="photoURL" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="photoURL"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Profile Photo URL (Optional)
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -164,8 +224,6 @@ const Register = () => {
                   id="photoURL"
                   name="photoURL"
                   type="url"
-                  value={formData.photoURL}
-                  onChange={handleChange}
                   className="focus:ring-amber-500 focus:border-amber-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md text-gray-900 placeholder-gray-400"
                   placeholder="https://example.com/photo.jpg"
                 />
@@ -174,7 +232,10 @@ const Register = () => {
 
             {/* Password Field */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700"
+              >
                 Password
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -187,9 +248,9 @@ const Register = () => {
                   type={showPassword ? "text" : "password"}
                   autoComplete="new-password"
                   required
-                  value={formData.password}
-                  onChange={handleChange}
-                  className={`focus:ring-amber-500 focus:border-amber-500 block w-full pl-10 pr-10 py-3 ${errors.password ? 'border-red-300' : 'border-gray-300'} rounded-md text-gray-900 placeholder-gray-400`}
+                  className={`focus:ring-amber-500 focus:border-amber-500 block w-full pl-10 pr-10 py-3 ${
+                    errors.password ? "border-red-300" : "border-gray-300"
+                  } rounded-md text-gray-900 placeholder-gray-400`}
                   placeholder="••••••••"
                 />
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
@@ -209,14 +270,17 @@ const Register = () => {
               {errors.password && Array.isArray(errors.password) ? (
                 <div className="mt-1">
                   {errors.password.map((error, index) => (
-                    <p key={index} className="text-sm text-red-600">{error}</p>
+                    <p key={index} className="text-sm text-red-600">
+                      {error}
+                    </p>
                   ))}
                 </div>
               ) : (
                 <p className="mt-1 text-sm text-red-600">{errors.password}</p>
               )}
               <p className="mt-1 text-xs text-gray-500">
-                Password must contain at least 6 characters with uppercase and lowercase letters
+                Password must contain at least 6 characters with uppercase and
+                lowercase letters
               </p>
             </div>
 
@@ -262,7 +326,7 @@ const Register = () => {
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
-              Already have an account?{' '}
+              Already have an account?{" "}
               <Link
                 to="/login"
                 className="font-medium text-amber-600 hover:text-amber-500 transition-colors"

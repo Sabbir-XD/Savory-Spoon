@@ -1,8 +1,10 @@
 import React from "react";
 import { Link, NavLink } from "react-router";
 import logo from "../../src/assets/image/logo.png";
+import useAuth from "../Hooks/useAuth";
 
 const Navbar = () => {
+  const {name} = useAuth();
   const links = (
     <>
       <li>
