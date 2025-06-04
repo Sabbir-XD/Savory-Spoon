@@ -11,7 +11,6 @@ const Register = () => {
     email: '',
     photoURL: '',
     password: '',
-    confirmPassword: ''
   });
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
