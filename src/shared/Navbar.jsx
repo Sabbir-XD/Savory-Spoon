@@ -2,11 +2,9 @@ import React from "react";
 import { Link, NavLink } from "react-router";
 import logo from "../../src/assets/image/logo.png";
 import useAuth from "../Hooks/useAuth";
-import { FaGoogle } from "react-icons/fa";
 
 const Navbar = () => {
   const { user, handleLogoutUser } = useAuth();
-  console.log("user in nav", user);
   const links = (
     <>
       <li>
@@ -147,14 +145,14 @@ const Navbar = () => {
         {user ? (
           <button
             onClick={handleLogoutUser}
-            className="btn bg-amber-600 hover:bg-amber-700 border-amber-600 hover:border-amber-700 text-white dark:bg-amber-500 dark:hover:bg-amber-600 dark:border-amber-500 dark:hover:border-amber-600 transition-all shadow-md"
+            className="btn bg-gradient-to-r from-amber-500 to-amber-600 hover:bg-amber-700 border-amber-600 hover:border-amber-700 text-white dark:bg-amber-500 dark:hover:bg-amber-600 dark:border-amber-500 dark:hover:border-amber-600 transition-all shadow-md"
           >
             Logout
           </button>
         ) : (
           <Link
             to="/login"
-            className="btn bg-amber-600 hover:bg-amber-700 border-amber-600 hover:border-amber-700 text-white dark:bg-amber-500 dark:hover:bg-amber-600 dark:border-amber-500 dark:hover:border-amber-600 transition-all shadow-md"
+            className="btn bg-gradient-to-r from-amber-500 to-amber-600 hover:bg-amber-700 border-amber-600 hover:border-amber-700 text-white dark:bg-amber-500 dark:hover:bg-amber-600 dark:border-amber-500 dark:hover:border-amber-600 transition-all shadow-md"
           >
             Log In
           </Link>

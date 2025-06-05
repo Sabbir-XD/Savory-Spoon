@@ -6,6 +6,7 @@ import Gallery from "../pages/Gallery";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import AddFood from "../pages/AddFood";
+import PrivetRoute from "./PrivetRoute";
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +19,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/AllFoods",
+        loader: () => fetch("http://localhost:5000/foods"),
         element: <AllFoods />,
       },
       {
@@ -26,7 +28,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/AddFood",
-        element: <AddFood />,
+        element:<PrivetRoute><AddFood /></PrivetRoute>,
       },
       {
         path: "/Login",
