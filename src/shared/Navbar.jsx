@@ -118,7 +118,7 @@ const Navbar = () => {
             >
               <div className="w-10 rounded-full ring ring-gray-300 dark:ring-gray-600 ring-offset-2 ring-offset-white/80 dark:ring-offset-gray-800/80 hover:ring-amber-500 dark:hover:ring-amber-400 transition-all">
                 <img
-                  src={user.photoURL || userImage}
+                  src={user?.photoURL}
                   alt="User Profile"
                 />
               </div>
