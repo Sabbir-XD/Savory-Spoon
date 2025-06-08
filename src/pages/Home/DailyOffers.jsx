@@ -1,0 +1,177 @@
+import { useRef } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Navigation, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+import { FaFire, FaRegClock } from "react-icons/fa";
+import FoodOfferCard from "../../components/FoodOfferCard";
+import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
+
+const DailyOffer = () => {
+  const prevRef = useRef(null);
+  const nextRef = useRef(null);
+
+  const offers = [
+    {
+      id: 1,
+      discount: "13% Off",
+      title: "Beef Masala Salad",
+      image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c",
+      description: "Fresh beef with masala spices on a bed of mixed greens",
+    },
+    {
+      id: 2,
+      discount: "10% Off",
+      title: "Chicken Caesar Wrap",
+      image:
+        "https://thumbs.dreamstime.com/b/grilled-chicken-caesar-wrap-isolated-white-background-grilled-chicken-caesar-wrap-isolated-white-background-showcasing-366949715.jpg",
+      description:
+        "Grilled chicken, romaine lettuce and parmesan in a soft wrap",
+    },
+    {
+      id: 3,
+      discount: "15% Off",
+      title: "Vegetable Stir Fry",
+      image: "https://images.unsplash.com/photo-1626700051175-6818013e1d4f",
+      description: "Fresh seasonal vegetables stir-fried with garlic sauce",
+    },
+    {
+      id: 4,
+      discount: "20% Off",
+      title: "Margherita Pizza",
+      image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38",
+      description: "Classic pizza with tomato sauce, mozzarella and basil",
+    },
+    {
+      id: 5,
+      discount: "5% Off",
+      title: "Chocolate Brownie",
+      image:
+        "https://img.freepik.com/free-photo/chocolate-brownies-sackcloth-coffee-beans-wooden-table_1150-20910.jpg?semt=ais_hybrid&w=740",
+      description: "Warm chocolate brownie with vanilla ice cream",
+    },
+    {
+      id: 6,
+      discount: "12% Off",
+      title: "Avocado Toast",
+      image:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnmqONlrqyavI-eBSRE8O-jdxXxqE3wRmMdQ&s",
+      description: "Sourdough bread with mashed avocado and cherry tomatoes",
+    },
+    {
+      id: 7,
+      discount: "8% Off",
+      title: "Beef Burger",
+      image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
+      description: "Juicy beef patty with cheese, lettuce and special sauce",
+    },
+    {
+      id: 8,
+      discount: "25% Off",
+      title: "Fruit Smoothie",
+      image: "https://images.unsplash.com/photo-1505576399279-565b52d4ac71",
+      description: "Mixed berry smoothie with banana and yogurt",
+    },
+    {
+      id: 9,
+      discount: "18% Off",
+      title: "Sushi Platter",
+      image:
+        "https://img.freepik.com/premium-photo/assorted-sushi-platter-elegant-table-setting_711700-21906.jpg",
+      description: "Assorted fresh sushi with wasabi and soy sauce",
+    },
+    {
+      id: 10,
+      discount: "7% Off",
+      title: "Pasta Carbonara",
+      image: "https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb",
+      description: "Spaghetti with creamy egg sauce, pancetta and parmesan",
+    },
+  ];
+
+  return (
+    <div className="relative max-w-full mx-auto bg-white rounded-xl mt-10 mb-10 shadow-lg overflow-hidden">
+      {/* Header */}
+      <div className="bg-gradient-to-r from-orange-200 to-orange-300 p-6 md:p-8 text-white relative">
+        <div className="flex justify-between flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
+          <div>
+            <div className="flex items-center space-x-2">
+              <FaFire className="text-amber-500" size={28} />
+              <h2 className="text-2xl text-orange-600 font-bold">
+                Daily Offer
+              </h2>
+            </div>
+            <p className="mt-4 text-black text-2xl md:text-3xl font-bold">
+              Up to <span className="text-orange-600">75% off</span> for this
+              day
+            </p>
+          </div>
+          <div className="flex flex-col items-center space-y-4">
+            <div className="flex items-center space-x-1 bg-orange-500 px-4 py-1 rounded-full text-white shadow-md">
+              <FaRegClock size={16} />
+              <span className="text-sm font-medium">Today only</span>
+            </div>
+            {/* Navigation Arrows */}
+            <div className="flex space-x-2">
+              <button
+                ref={prevRef}
+                className="bg-orange-500 p-2 rounded-full shadow-md cursor-pointer hover:bg-black transition duration-300"
+              >
+                <FaArrowLeftLong className="text-white" size={16} />
+              </button>
+              <button
+                ref={nextRef}
+                className="bg-black p-2 rounded-full shadow-md cursor-pointer hover:bg-orange-500 transition duration-300"
+              >
+                <FaArrowRightLong className="text-white" size={16} />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Offers Slider */}
+      <div className="p-4 relative">
+        <Swiper
+          spaceBetween={20}
+          breakpoints={{
+            0: {
+              slidesPerView: 1,
+            },
+            640: {
+              slidesPerView: 2,
+            },
+            1024: {
+              slidesPerView: 3,
+            },
+          }}
+          autoplay={{
+            delay: 3000,
+            disableOnInteraction: false,
+          }}
+          navigation={{
+            prevEl: prevRef.current,
+            nextEl: nextRef.current,
+          }}
+          modules={[Pagination, Navigation, Autoplay]}
+          loop={true}
+          onInit={(swiper) => {
+            swiper.params.navigation.prevEl = prevRef.current;
+            swiper.params.navigation.nextEl = nextRef.current;
+            swiper.navigation.init();
+            swiper.navigation.update();
+          }}
+        >
+          {offers.map((offer) => (
+            <SwiperSlide key={offer.id}>
+              <FoodOfferCard offer={offer} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
+    </div>
+  );
+};
+
+export default DailyOffer;

@@ -7,6 +7,8 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import AddFood from "../pages/AddFood";
 import PrivetRoute from "./PrivetRoute";
+import FoodDetails from "../pages/FoodDetails";
+import PurchaseFood from "../pages/PurchaseFood";
 
 export const router = createBrowserRouter([
   {
@@ -29,6 +31,16 @@ export const router = createBrowserRouter([
       {
         path: "/AddFood",
         element:<PrivetRoute><AddFood /></PrivetRoute>,
+      },
+      {
+        path: "/food/:id",
+        loader: ({ params }) => fetch(`http://localhost:5000/food/${params.id}`),
+        element: <FoodDetails />,
+      },
+      {
+        path: "/purchase/:id",
+        loader: ({ params }) => fetch(`http://localhost:5000/purchase/${params.id}`),
+        element: <PrivetRoute><PurchaseFood /></PrivetRoute>,
       },
       {
         path: "/Login",

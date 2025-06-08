@@ -25,7 +25,7 @@ const AddFood = () => {
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
 
-    //add to data in mongodb
+    // Add to data in MongoDB
     axios
       .post("http://localhost:5000/foods", data)
       .then((res) => {
@@ -37,17 +37,20 @@ const AddFood = () => {
             draggable: true,
           });
 
-          e.form.reset();
+          e.target.reset();
         }
       })
       .catch((err) => {
         console.log(err);
+        Swal.fire({
+          title: "Error adding food!",
+          text: err.message,
+          icon: "error",
+        });
+      })
+      .finally(() => {
+        setIsSubmitting(false);
       });
-
-    setTimeout(() => {
-      console.log("Form submitted");
-      setIsSubmitting(false);
-    }, 2000);
   };
 
   return (
@@ -160,7 +163,30 @@ const AddFood = () => {
                         className="flex-1 px-3 py-2 border border-amber-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
                         required
                       />
+                      <button
+                        type="button"
+                        className="px-3 py-2 bg-amber-100 text-amber-700 rounded-md hover:bg-amber-200 transition-colors"
+                      >
+                        <FiUpload className="h-5 w-5" />
+                      </button>
                     </div>
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="details"
+                      className="block text-sm font-medium text-amber-700 mb-1"
+                    >
+                      Food Details
+                    </label>
+                    <textarea
+                      id="details"
+                      name="details"
+                      placeholder="Enter food details"
+                      className="w-full px-3 py-2 border border-amber-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
+                      rows="3"
+                      required
+                    />
                   </div>
 
                   <div>
@@ -238,7 +264,7 @@ const AddFood = () => {
                     }`}
                   >
                     <FiSave className="mr-2 h-5 w-5" />
-                    Add Food Item
+                    {isSubmitting ? "Adding..." : "Add Food Item"}
                   </button>
                 </div>
               </form>
