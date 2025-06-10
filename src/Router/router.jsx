@@ -39,7 +39,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/purchase/:id",
-        loader: ({ params }) => fetch(`http://localhost:5000/purchase/${params.id}`),
+        loader: ({ params }) => fetch(`http://localhost:5000/food/${params.id}`),
         element: <PrivetRoute><PurchaseFood /></PrivetRoute>,
       },
       {
