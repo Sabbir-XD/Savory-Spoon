@@ -16,7 +16,7 @@ import { Link, useLoaderData, useNavigate } from "react-router";
 const FoodDetails = () => {
   const food = useLoaderData();
   const [isFavorite, setIsFavorite] = useState(false);
-  const [purchaseCount, setPurchaseCount] = useState(food.purchaseCount || 0);
+  const [purchaseCount, setPurchaseCount] = useState(0);
   const navigate = useNavigate();
 
   // Function to render star ratings
@@ -48,14 +48,13 @@ const FoodDetails = () => {
           label: "Rice Menu",
         };
       default:
-        return { icon: null, label: "Regular" };
+        return { icon: null, label: food.foodCategory };
     }
   };
 
   const categoryInfo = getCategoryInfo();
 
   const handlePurchase = () => {
-    // In a real app, you would handle the purchase process here
     setPurchaseCount(purchaseCount + 1);
     navigate(`/purchase/${food._id}`);
   };
@@ -113,15 +112,15 @@ const FoodDetails = () => {
 
           {/* Rating and reviews */}
           <div className="flex items-center mb-6">
-            <div className="flex mr-2">{renderStars(4.5)}</div>
+            <div className="flex mr-2">{renderStars(4)}</div>
             <span className="text-gray-600 dark:text-gray-400">
-              (42 reviews)
+              (Customer reviews)
             </span>
           </div>
 
           {/* Description */}
           <p className="text-gray-700 dark:text-gray-300 mb-6 leading-relaxed">
-            {food.details}
+            {food.description}
           </p>
 
           {/* Details Grid */}
@@ -130,27 +129,27 @@ const FoodDetails = () => {
               <FaClock className="text-gray-500 dark:text-gray-400 mr-3" />
               <div>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Prep Time
+                  Origin
                 </p>
-                <p className="font-medium">30-40 mins</p>
+                <p className="font-medium">{food.foodOrigin}</p>
               </div>
             </div>
             <div className="flex items-center">
               <FaChartLine className="text-gray-500 dark:text-gray-400 mr-3" />
               <div>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Popularity
+                  Category
                 </p>
-                <p className="font-medium">Best Seller</p>
+                <p className="font-medium">{food.foodCategory}</p>
               </div>
             </div>
             <div className="flex items-center">
               <FaUtensils className="text-gray-500 dark:text-gray-400 mr-3" />
               <div>
                 <p className="text-sm text-gray-500 dark:text-gray-400">
-                  Servings
+                  Quantity
                 </p>
-                <p className="font-medium">2-3 people</p>
+                <p className="font-medium">{food.quantity}</p>
               </div>
             </div>
             <div className="flex items-center">
@@ -170,11 +169,6 @@ const FoodDetails = () => {
               <span className="text-amber-600 dark:text-amber-400 font-bold text-2xl">
                 Tk {food.price}
               </span>
-              {food.originalPrice && (
-                <span className="text-gray-400 dark:text-gray-500 line-through text-lg ml-2">
-                  Tk {food.originalPrice}
-                </span>
-              )}
             </div>
             <div
               className={`text-sm px-3 py-1 rounded-full font-medium
@@ -206,81 +200,6 @@ const FoodDetails = () => {
 
             <div className="text-center text-sm text-gray-500 dark:text-gray-400">
               Vendor: {food.name} • {food.email}
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Additional Information Section */}
-      <div className="mt-12 bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6">
-        <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-6">
-          About This Dish
-        </h2>
-
-        <div className="grid md:grid-cols-2 gap-8">
-          <div>
-            <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-3">
-              Ingredients
-            </h3>
-            <ul className="list-disc pl-5 space-y-2 text-gray-600 dark:text-gray-400">
-              <li>Premium quality rice</li>
-              <li>Freshly prepared meat</li>
-              <li>Special blend of spices</li>
-              <li>Fresh vegetables</li>
-              <li>Traditional cooking oil</li>
-              <li>Secret family recipe</li>
-            </ul>
-          </div>
-
-          <div>
-            <h3 className="text-lg font-semibold text-gray-700 dark:text-gray-300 mb-3">
-              Nutritional Info
-            </h3>
-            <div className="space-y-3">
-              <div>
-                <div className="flex justify-between mb-1">
-                  <span className="text-gray-600 dark:text-gray-400">
-                    Calories
-                  </span>
-                  <span className="font-medium">450 kcal</span>
-                </div>
-                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                  <div
-                    className="bg-green-500 h-2 rounded-full"
-                    style={{ width: "60%" }}
-                  ></div>
-                </div>
-              </div>
-
-              <div>
-                <div className="flex justify-between mb-1">
-                  <span className="text-gray-600 dark:text-gray-400">
-                    Protein
-                  </span>
-                  <span className="font-medium">25g</span>
-                </div>
-                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                  <div
-                    className="bg-blue-500 h-2 rounded-full"
-                    style={{ width: "75%" }}
-                  ></div>
-                </div>
-              </div>
-
-              <div>
-                <div className="flex justify-between mb-1">
-                  <span className="text-gray-600 dark:text-gray-400">
-                    Carbs
-                  </span>
-                  <span className="font-medium">50g</span>
-                </div>
-                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                  <div
-                    className="bg-amber-500 h-2 rounded-full"
-                    style={{ width: "50%" }}
-                  ></div>
-                </div>
-              </div>
             </div>
           </div>
         </div>

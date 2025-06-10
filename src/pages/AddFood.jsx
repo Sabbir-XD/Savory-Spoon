@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FiUpload, FiSave, FiUser, FiMail, FiPlusCircle } from "react-icons/fi";
+import { FiUpload, FiSave, FiUser, FiMail, FiPlusCircle, FiGlobe } from "react-icons/fi";
 import useAuth from "../Hooks/useAuth";
 import BackgroundTitle from "../components/BackgroundTitle";
 import axios from "axios";
@@ -17,6 +17,19 @@ const AddFood = () => {
     "Snack",
     "Salad",
     "Soup",
+  ];
+
+  const countries = [
+    "Bangladesh",
+    "India",
+    "China",
+    "Japan",
+    "Thailand",
+    "Italy",
+    "Mexico",
+    "United States",
+    "France",
+    "Other"
   ];
 
   const handleSubmit = (e) => {
@@ -57,7 +70,7 @@ const AddFood = () => {
     <div className="min-h-screen bg-amber-50">
       {/* Page Title Section with Background Image */}
       <div>
-        <BackgroundTitle />
+        <BackgroundTitle title="Add New Food Item" />
       </div>
 
       {/* Form Section */}
@@ -87,7 +100,7 @@ const AddFood = () => {
                       htmlFor="name"
                       className="block text-sm font-medium text-amber-700 mb-1"
                     >
-                      Your Name
+                      Added By (Name)
                     </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -99,7 +112,7 @@ const AddFood = () => {
                         name="name"
                         readOnly
                         defaultValue={user?.displayName || ""}
-                        className="w-full pl-10 px-3 py-2 border border-amber-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
+                        className="w-full pl-10 px-3 py-2 border border-amber-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 bg-gray-50"
                         required
                       />
                     </div>
@@ -109,7 +122,7 @@ const AddFood = () => {
                       htmlFor="email"
                       className="block text-sm font-medium text-amber-700 mb-1"
                     >
-                      Your Email
+                      Added By (Email)
                     </label>
                     <div className="relative">
                       <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -121,97 +134,57 @@ const AddFood = () => {
                         name="email"
                         readOnly
                         defaultValue={user?.email || ""}
-                        className="w-full pl-10 px-3 py-2 border border-amber-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
+                        className="w-full pl-10 px-3 py-2 border border-amber-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 bg-gray-50"
                         required
                       />
                     </div>
                   </div>
                 </div>
 
-                {/* Food Info Section */}
+                {/* Food Basic Info Section */}
                 <div className="space-y-6">
-                  <div>
-                    <label
-                      htmlFor="foodName"
-                      className="block text-sm font-medium text-amber-700 mb-1"
-                    >
-                      Food Name
-                    </label>
-                    <input
-                      type="text"
-                      id="foodName"
-                      name="foodName"
-                      placeholder="Enter food name"
-                      className="w-full px-3 py-2 border border-amber-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="foodImage"
-                      className="block text-sm font-medium text-amber-700 mb-1"
-                    >
-                      Food Image URL
-                    </label>
-                    <div className="flex items-center space-x-2">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <label
+                        htmlFor="foodName"
+                        className="block text-sm font-medium text-amber-700 mb-1"
+                      >
+                        Food Name *
+                      </label>
                       <input
                         type="text"
-                        id="foodImage"
-                        name="foodImage"
-                        placeholder="https://example.com/image.jpg"
-                        className="flex-1 px-3 py-2 border border-amber-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
+                        id="foodName"
+                        name="foodName"
+                        placeholder="e.g. Chicken Biryani"
+                        className="w-full px-3 py-2 border border-amber-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
                         required
                       />
-                      <button
-                        type="button"
-                        className="px-3 py-2 bg-amber-100 text-amber-700 rounded-md hover:bg-amber-200 transition-colors"
-                      >
-                        <FiUpload className="h-5 w-5" />
-                      </button>
                     </div>
-                  </div>
 
-                  <div>
-                    <label
-                      htmlFor="details"
-                      className="block text-sm font-medium text-amber-700 mb-1"
-                    >
-                      Food Details
-                    </label>
-                    <textarea
-                      id="details"
-                      name="details"
-                      placeholder="Enter food details"
-                      className="w-full px-3 py-2 border border-amber-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
-                      rows="3"
-                      required
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="foodCategory"
-                      className="block text-sm font-medium text-amber-700 mb-1"
-                    >
-                      Food Category
-                    </label>
-                    <select
-                      id="foodCategory"
-                      name="foodCategory"
-                      className="w-full px-3 py-2 border border-amber-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
-                      required
-                    >
-                      <option value="">Select a category</option>
-                      {categories.map((category) => (
-                        <option
-                          key={category}
-                          value={category.toLowerCase().replace(" ", "-")}
-                        >
-                          {category}
-                        </option>
-                      ))}
-                    </select>
+                    <div>
+                      <label
+                        htmlFor="foodCategory"
+                        className="block text-sm font-medium text-amber-700 mb-1"
+                      >
+                        Food Category *
+                      </label>
+                      <select
+                        id="foodCategory"
+                        name="foodCategory"
+                        className="w-full px-3 py-2 border border-amber-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
+                        required
+                      >
+                        <option value="">Select a category</option>
+                        {categories.map((category) => (
+                          <option
+                            key={category}
+                            value={category.toLowerCase().replace(" ", "-")}
+                          >
+                            {category}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -220,13 +193,14 @@ const AddFood = () => {
                         htmlFor="quantity"
                         className="block text-sm font-medium text-amber-700 mb-1"
                       >
-                        Quantity
+                        Available Quantity *
                       </label>
                       <input
                         type="number"
                         id="quantity"
                         name="quantity"
                         min="1"
+                        placeholder="e.g. 10"
                         className="w-full px-3 py-2 border border-amber-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
                         required
                       />
@@ -236,7 +210,7 @@ const AddFood = () => {
                         htmlFor="price"
                         className="block text-sm font-medium text-amber-700 mb-1"
                       >
-                        Price (Tk)
+                        Price (Tk) *
                       </label>
                       <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -246,12 +220,85 @@ const AddFood = () => {
                           type="number"
                           id="price"
                           name="price"
+                          min="1"
+                          placeholder="e.g. 250"
                           className="w-full pl-8 px-3 py-2 border border-amber-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
                           required
                         />
                       </div>
                     </div>
                   </div>
+
+                  <div>
+                    <label
+                      htmlFor="foodOrigin"
+                      className="block text-sm font-medium text-amber-700 mb-1"
+                    >
+                      Food Origin (Country) *
+                    </label>
+                    <div className="relative">
+                      <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <FiGlobe className="h-5 w-5 text-amber-400" />
+                      </div>
+                      <select
+                        id="foodOrigin"
+                        name="foodOrigin"
+                        className="w-full pl-10 px-3 py-2 border border-amber-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
+                        required
+                      >
+                        <option value="">Select country of origin</option>
+                        {countries.map((country) => (
+                          <option key={country} value={country}>
+                            {country}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="foodImage"
+                      className="block text-sm font-medium text-amber-700 mb-1"
+                    >
+                      Food Image URL *
+                    </label>
+                    <div className="flex items-center space-x-2">
+                      <input
+                        type="url"
+                        id="foodImage"
+                        name="foodImage"
+                        placeholder="https://example.com/food-image.jpg"
+                        className="flex-1 px-3 py-2 border border-amber-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
+                        required
+                      />
+                      <button
+                        type="button"
+                        className="px-3 py-2 bg-amber-100 text-amber-700 rounded-md hover:bg-amber-200 transition-colors"
+                        title="Upload image"
+                      >
+                        <FiUpload className="h-5 w-5" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Food Description Section */}
+                <div>
+                  <label
+                    htmlFor="description"
+                    className="block text-sm font-medium text-amber-700 mb-1"
+                  >
+                    Food Description *
+                  </label>
+                  <textarea
+                    id="description"
+                    name="description"
+                    placeholder="Describe the food item including ingredients, preparation method, taste, etc."
+                    className="w-full px-3 py-2 border border-amber-300 rounded-md shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500"
+                    rows="4"
+                    required
+                  />
                 </div>
 
                 {/* Submit Button */}
@@ -264,7 +311,7 @@ const AddFood = () => {
                     }`}
                   >
                     <FiSave className="mr-2 h-5 w-5" />
-                    {isSubmitting ? "Adding..." : "Add Food Item"}
+                    {isSubmitting ? "Adding Food Item..." : "Add Food Item"}
                   </button>
                 </div>
               </form>
