@@ -9,6 +9,8 @@ import AddFood from "../pages/AddFood";
 import PrivetRoute from "./PrivetRoute";
 import FoodDetails from "../pages/FoodDetails";
 import PurchaseFood from "../pages/PurchaseFood";
+import MyOrders from "../pages/MyOrders";
+import MyFood from "../pages/MyFood";
 
 export const router = createBrowserRouter([
   {
@@ -21,7 +23,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/AllFoods",
-        loader: () => fetch("http://localhost:5000/foods"),
+        loader: () => fetch(`${import.meta.env.VITE_API_URL}/foods`),
         element: <AllFoods />,
       },
       {
@@ -30,17 +32,44 @@ export const router = createBrowserRouter([
       },
       {
         path: "/AddFood",
-        element:<PrivetRoute><AddFood /></PrivetRoute>,
+        element: (
+          <PrivetRoute>
+            <AddFood />
+          </PrivetRoute>
+        ),
       },
       {
         path: "/food/:id",
-        loader: ({ params }) => fetch(`http://localhost:5000/food/${params.id}`),
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_URL}/food/${params.id}`),
         element: <FoodDetails />,
       },
       {
         path: "/purchase/:id",
-        loader: ({ params }) => fetch(`http://localhost:5000/food/${params.id}`),
-        element: <PrivetRoute><PurchaseFood /></PrivetRoute>,
+        loader: ({ params }) =>
+          fetch(`${import.meta.env.VITE_API_URL}/food/${params.id}`),
+        element: (
+          <PrivetRoute>
+            <PurchaseFood />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/MyOrders",
+        element: (
+          <PrivetRoute>
+            <MyOrders />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/MyFood",
+        loader: () => fetch(`${import.meta.env.VITE_API_URL}/foods`),
+        element: (
+          <PrivetRoute>
+            <MyFood />
+          </PrivetRoute>
+        ),
       },
       {
         path: "/Login",

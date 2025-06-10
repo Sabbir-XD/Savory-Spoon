@@ -40,7 +40,7 @@ const AddFood = () => {
 
     // Add to data in MongoDB
     axios
-      .post("http://localhost:5000/foods", data)
+      .post(`${import.meta.env.VITE_API_URL}/foods`, data)
       .then((res) => {
         console.log(res.data);
         if (res.data.insertedId) {

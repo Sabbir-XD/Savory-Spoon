@@ -5,7 +5,7 @@ import useAuth from "../Hooks/useAuth";
 
 const Navbar = () => {
   const { user, handleLogoutUser } = useAuth();
-  console.log(user)
+  console.log(user);
   const links = (
     <>
       <li>
@@ -116,16 +116,25 @@ const Navbar = () => {
               className="btn btn-ghost btn-circle avatar hover:ring-amber-500 dark:hover:ring-amber-400 transition-all"
             >
               <div className="w-10 rounded-full ring ring-gray-300 dark:ring-gray-600 ring-offset-2 ring-offset-white/80 dark:ring-offset-gray-800/80 hover:ring-amber-500 dark:hover:ring-amber-400 transition-all">
-                <img
-                  src={user.photoURL}
-                  alt="Profile"
-                />
+                <img src={user.photoURL} alt="Profile" />
               </div>
             </div>
             <ul
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-white/95 dark:bg-gray-700/95 rounded-box w-52 backdrop-blur-md"
             >
+              <li>
+                <NavLink
+                  to="/MyFood"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-amber-600 font-semibold dark:text-amber-400"
+                      : "hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
+                  }
+                >
+                  My Food
+                </NavLink>
+              </li>
               <li>
                 <NavLink
                   to="/AddFood"
@@ -136,6 +145,18 @@ const Navbar = () => {
                   }
                 >
                   Add Food
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/MyOrders"
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-amber-600 font-semibold dark:text-amber-400"
+                      : "hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
+                  }
+                >
+                  My Orders
                 </NavLink>
               </li>
             </ul>
