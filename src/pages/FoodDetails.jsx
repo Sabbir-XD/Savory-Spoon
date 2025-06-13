@@ -10,8 +10,9 @@ import {
   FaChartLine,
   FaArrowLeft,
 } from "react-icons/fa";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLoaderData, useNavigate } from "react-router";
+import axios from "axios";
 
 const FoodDetails = () => {
   const food = useLoaderData();
@@ -19,6 +20,14 @@ const FoodDetails = () => {
   const [purchaseCount, setPurchaseCount] = useState(0);
   const navigate = useNavigate();
 
+useEffect(() => {
+   axios.get(`${import.meta.env.VITE_API_URL}/purchases`).then((response) => {
+     const { data } = response;
+     const filteredData = data.filter((purchase) => purchase.foodId === food._id);
+     console.log(filteredData);
+     setPurchaseCount(filteredData.length);
+   })
+})
   // Function to render star ratings
   const renderStars = (rating) => {
     return Array(5)

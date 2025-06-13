@@ -143,8 +143,6 @@ const UpdateFoodModal = ({ isOpen, onClose, food, onSuccess }) => {
                   name="price"
                   defaultValue={food.price}
                   placeholder="Price"
-                  min="0"
-                  step="0.01"
                   className="pl-10 w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                   required
                 />
@@ -162,7 +160,6 @@ const UpdateFoodModal = ({ isOpen, onClose, food, onSuccess }) => {
                   name="quantity"
                   defaultValue={food.quantity}
                   placeholder="Quantity"
-                  min="1"
                   className="pl-10 w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
                   required
                 />

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useLoaderData, useParams } from "react-router";
+import { useNavigate, useLoaderData } from "react-router";
 import {
   FaShoppingCart,
   FaCheckCircle,
@@ -10,17 +10,15 @@ import {
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useAuth from "../Hooks/useAuth";
-import { collection, addDoc, doc, updateDoc } from "firebase/firestore";
-// import { db } from "../firebaseConfig";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const PurchaseFood = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const food = useLoaderData();
 
-  const [formData, setFormData] = useState({
-    quantity: 1,
-  });
+  const [formData, setFormData] = useState({ quantity: 1 });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const availableQuantity = Number(food.quantity) || 0;
@@ -80,42 +78,57 @@ const PurchaseFood = () => {
     };
 
     try {
-      // 1. Add purchase record
-      await addDoc(collection(db, "purchases"), purchaseData);
+      // 1. Post purchase to DB
+      await axios.post(`${import.meta.env.VITE_API_URL}/purchases`, purchaseData)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.insertedId) {
+          Swal.fire({
+            title: "Food Purchase successfully!",
+            icon: "success",
+            draggable: true,
+          });
+      }}).catch((err) => {
+        console.log(err);
+        Swal.fire({
+          title: "Error purchasing food!",
+          text: err.message,
+          icon: "error",
+        });
+      });
 
-      // 2. Update Food Quantity in database
+      // 2. Update food quantity
       const newQuantity = availableQuantity - selectedQuantity;
-      const foodRef = doc(db, "foods", food._id);
-
-      await updateDoc(foodRef, {
+      await axios.patch(`${import.meta.env.VITE_API_URL}/foods/${food._id}`, {
         quantity: newQuantity >= 0 ? newQuantity : 0,
       });
 
-      // 3. Show success message
+      // 3. Success toast
       toast.success(
         <div>
           <h3 className="font-bold">Order Successful!</h3>
           <p>
-            {selectedQuantity} {food.foodName} purchased for Tk{" "}
-            {purchaseData.totalAmount}
+            {selectedQuantity} {food.foodName} purchased for Tk {purchaseData.totalAmount}
           </p>
         </div>,
         {
           position: "top-center",
-          autoClose: 5000,
+          autoClose: 3000,
           theme: "colored",
         }
       );
 
-      // 4. Navigate to confirmation page
+      // 4. Navigate after toast
       setTimeout(() => {
-        navigate("/order-confirmation", { state: { purchase: purchaseData } });
-      }, 2000);
+        navigate("/MyOrders", { state: { purchase: purchaseData } });
+      }, 3000);
     } catch (error) {
       toast.error(
         <div>
           <h3 className="font-bold">Order Failed</h3>
-          <p>{error.message || "Something went wrong. Please try again."}</p>
+          <p>
+            {error.response?.data?.message || error.message || "Something went wrong."}
+          </p>
         </div>,
         {
           position: "top-center",
@@ -132,11 +145,11 @@ const PurchaseFood = () => {
   const purchaseDateDisplay = new Date().toLocaleDateString();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 py-12 px-4 sm:px-6 lg:px-8 flex items-center justify-center">
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 to-gray-100 dark:from-gray-800 dark:to-gray-900 py-12 px-4 flex items-center justify-center">
       <ToastContainer />
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-2xl mx-auto bg-white dark:bg-gray-700 rounded-2xl shadow-2xl overflow-hidden"
+        className="w-full max-w-2xl bg-white dark:bg-gray-700 rounded-2xl shadow-2xl overflow-hidden"
       >
         <div className="bg-gradient-to-r from-amber-500 to-amber-600 dark:from-amber-600 dark:to-amber-700 p-6 text-center">
           <h2 className="text-3xl font-bold text-white">Complete Your Purchase</h2>
@@ -165,41 +178,36 @@ const PurchaseFood = () => {
         </div>
 
         <div className="p-6 space-y-4">
-          {/* Quantity */}
+          {/* Quantity Selector */}
           <div>
-            <label
-              htmlFor="quantity"
-              className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2"
-            >
+            <label htmlFor="quantity" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Quantity
             </label>
-            <div className="relative">
-              {isOutOfStock ? (
-                <p className="text-red-600 font-semibold">
-                  This item is currently out of stock. You cannot purchase it.
-                </p>
-              ) : (
-                <select
-                  id="quantity"
-                  name="quantity"
-                  value={formData.quantity}
-                  onChange={handleChange}
-                  className="w-full bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded-lg py-2 px-4 text-gray-700 dark:text-gray-200 focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-                  required
-                >
-                  {quantityOptions.map((qty) => (
-                    <option key={qty} value={qty}>
-                      {qty}
-                    </option>
-                  ))}
-                </select>
-              )}
-            </div>
+            {isOutOfStock ? (
+              <p className="text-red-600 font-semibold">
+                This item is currently out of stock. You cannot purchase it.
+              </p>
+            ) : (
+              <select
+                id="quantity"
+                name="quantity"
+                value={formData.quantity}
+                onChange={handleChange}
+                className="w-full bg-white dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded-lg py-2 px-4 text-gray-700 dark:text-gray-200"
+                required
+              >
+                {quantityOptions.map((qty) => (
+                  <option key={qty} value={qty}>
+                    {qty}
+                  </option>
+                ))}
+              </select>
+            )}
           </div>
 
-          {/* Buyer Name */}
+          {/* Buyer Info (name, email, date) */}
           <div>
-            <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Your Name
             </label>
             <div className="relative">
@@ -207,16 +215,14 @@ const PurchaseFood = () => {
                 type="text"
                 value={user?.displayName || ""}
                 disabled
-                readOnly
-                className="w-full bg-gray-100 dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded-lg py-2 px-4 text-gray-700 dark:text-gray-200"
+                className="w-full bg-gray-100 dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded-lg py-2 px-4"
               />
-              <FaUser className="absolute right-3 top-3 text-gray-400 dark:text-gray-300" />
+              <FaUser className="absolute right-3 top-3 text-gray-400" />
             </div>
           </div>
 
-          {/* Buyer Email */}
           <div>
-            <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Your Email
             </label>
             <div className="relative">
@@ -224,16 +230,14 @@ const PurchaseFood = () => {
                 type="email"
                 value={user?.email || ""}
                 disabled
-                readOnly
-                className="w-full bg-gray-100 dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded-lg py-2 px-4 text-gray-700 dark:text-gray-200"
+                className="w-full bg-gray-100 dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded-lg py-2 px-4"
               />
-              <FaEnvelope className="absolute right-3 top-3 text-gray-400 dark:text-gray-300" />
+              <FaEnvelope className="absolute right-3 top-3 text-gray-400" />
             </div>
           </div>
 
-          {/* Purchase Date */}
           <div>
-            <label className="block text-gray-700 dark:text-gray-300 text-sm font-medium mb-2">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
               Purchase Date
             </label>
             <div className="relative">
@@ -241,16 +245,15 @@ const PurchaseFood = () => {
                 type="text"
                 value={purchaseDateDisplay}
                 disabled
-                readOnly
-                className="w-full bg-gray-100 dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded-lg py-2 px-4 text-gray-700 dark:text-gray-200"
+                className="w-full bg-gray-100 dark:bg-gray-600 border border-gray-300 dark:border-gray-500 rounded-lg py-2 px-4"
               />
-              <FaCalendarAlt className="absolute right-3 top-3 text-gray-400 dark:text-gray-300" />
+              <FaCalendarAlt className="absolute right-3 top-3 text-gray-400" />
             </div>
           </div>
 
-          {/* Total */}
+          {/* Total Amount */}
           <div className="bg-amber-50 dark:bg-gray-600 rounded-lg p-4">
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between">
               <span className="text-gray-700 dark:text-gray-300 font-medium text-lg">
                 Total Amount:
               </span>
@@ -260,16 +263,15 @@ const PurchaseFood = () => {
             </div>
           </div>
 
-          {/* Submit */}
+          {/* Submit Button */}
           <button
             type="submit"
             disabled={isSubmitting || isOutOfStock || isOwnFood}
-            className={`w-full py-3 px-4 rounded-lg font-bold text-white transition-all flex items-center justify-center
-              ${
-                isSubmitting || isOutOfStock || isOwnFood
-                  ? "bg-amber-400 dark:bg-amber-500 cursor-not-allowed"
-                  : "bg-gradient-to-r from-amber-500 to-amber-600 dark:from-amber-600 dark:to-amber-700 hover:from-amber-600 hover:to-amber-700 shadow-lg hover:shadow-xl"
-              }`}
+            className={`w-full py-3 px-4 rounded-lg font-bold text-white transition-all flex items-center justify-center ${
+              isSubmitting || isOutOfStock || isOwnFood
+                ? "bg-amber-400 dark:bg-amber-500 cursor-not-allowed"
+                : "bg-gradient-to-r from-amber-500 to-amber-600 dark:from-amber-600 dark:to-amber-700 hover:shadow-xl"
+            }`}
           >
             {isSubmitting ? (
               "Processing..."

@@ -11,17 +11,15 @@ import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
 import { motion } from "framer-motion";
+import { deleteFood, fetchFoods } from "../api/foods";
 
-const fetchFoods = async (email) => {
-  const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/foods`, {
-    params: { email },
-  });
-  return data;
-};
-
-const deleteFood = async (id) => {
-  await axios.delete(`${import.meta.env.VITE_API_URL}/foods/${id}`);
-};
+// const fetchFoods = async (email) => {
+//   const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/foods/email/${email}`);
+//   return data;
+// };
+// const deleteFood = async (id) => {
+//   await axios.delete(`${import.meta.env.VITE_API_URL}/foods/${id}`);
+// };
 
 const MyFood = () => {
   const { user, loading } = useAuth();
