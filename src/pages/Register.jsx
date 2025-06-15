@@ -45,11 +45,8 @@ const Register = () => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-    const { name, email, password, photoURL } = Object.fromEntries(
-      formData.entries()
-    );
-    console.log(name, email, password, photoURL);
-    // Validate form
+    const { name, email, password, photoURL } = Object.fromEntries(formData.entries());
+
     const newErrors = {};
     if (!name) newErrors.name = "Name is required";
     if (!email) newErrors.email = "Email is required";
@@ -64,8 +61,6 @@ const Register = () => {
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-
-      // Show error toast for each error
       Object.values(newErrors).forEach((error) => {
         if (Array.isArray(error)) {
           error.forEach((err) => toast.error(err));
@@ -76,16 +71,12 @@ const Register = () => {
       return;
     }
 
-    // Registration logic would go here
     handleCreateUser(email, password)
       .then((userCredential) => {
         const user = userCredential.user;
-        console.log(user);
-
         handleUpdateProfile({ displayName: name, photoURL: photoURL });
         setUser({ ...user, displayName: name, photoURL: photoURL });
 
-        // Registration successful
         Swal.fire({
           position: "center",
           icon: "success",
@@ -98,16 +89,14 @@ const Register = () => {
       .catch((error) => {
         const errorMessage = error.message;
         setErrors({ password: errorMessage });
+        toast.error(errorMessage);
       });
   };
 
   const handleGoogleLogin = () => {
-    // Google login logic
     handleGoogleLoginUser()
       .then((result) => {
         const user = result.user;
-        console.log(user);
-
         Swal.fire({
           position: "center",
           icon: "success",
@@ -118,37 +107,32 @@ const Register = () => {
         navigate(location?.state || "/");
       })
       .catch((error) => {
-        console.error(error.message);
         toast.error(error.message);
       });
   };
 
   const handleGithubLogin = () => {
-    // GitHub login logic
+    // Optional: GitHub login functionality
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 to-amber-200 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-amber-50 dark:bg-gray-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <ToastContainer position="top-center" autoClose={3000} />
-
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
           Create Your Account
         </h2>
-        <p className="mt-2 text-center text-sm text-gray-600">
+        <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
           Join us to explore delicious food experiences
         </p>
       </div>
 
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <div className="bg-white py-8 px-6 shadow-lg rounded-lg sm:px-10 border border-gray-200">
+        <div className="bg-white dark:bg-gray-800 py-8 px-6 shadow-lg rounded-lg sm:px-10 border border-gray-200 dark:border-gray-700">
           <form className="mb-0 space-y-6" onSubmit={handleSubmit}>
-            {/* Name Field */}
+            {/* Name */}
             <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Full Name
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -159,25 +143,19 @@ const Register = () => {
                   id="name"
                   name="name"
                   type="text"
-                  autoComplete="name"
                   required
-                  className={`focus:ring-amber-500 focus:border-amber-500 block w-full pl-10 pr-3 py-3 ${
-                    errors.name ? "border-red-300" : "border-gray-300"
-                  } rounded-md text-gray-900 placeholder-gray-400`}
+                  className={`block w-full pl-10 pr-3 py-3 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-700 rounded-md focus:ring-amber-500 focus:border-amber-500 ${
+                    errors.name ? "border-red-300 dark:border-red-500" : "border-gray-300 dark:border-gray-600"
+                  }`}
                   placeholder="John Doe"
                 />
               </div>
-              {errors.name && (
-                <p className="mt-1 text-sm text-red-600">{errors.name}</p>
-              )}
+              {errors.name && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.name}</p>}
             </div>
 
-            {/* Email Field */}
+            {/* Email */}
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Email address
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -188,25 +166,19 @@ const Register = () => {
                   id="email"
                   name="email"
                   type="email"
-                  autoComplete="email"
                   required
-                  className={`focus:ring-amber-500 focus:border-amber-500 block w-full pl-10 pr-3 py-3 ${
-                    errors.email ? "border-red-300" : "border-gray-300"
-                  } rounded-md text-gray-900 placeholder-gray-400`}
+                  className={`block w-full pl-10 pr-3 py-3 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-700 rounded-md focus:ring-amber-500 focus:border-amber-500 ${
+                    errors.email ? "border-red-300 dark:border-red-500" : "border-gray-300 dark:border-gray-600"
+                  }`}
                   placeholder="your@email.com"
                 />
               </div>
-              {errors.email && (
-                <p className="mt-1 text-sm text-red-600">{errors.email}</p>
-              )}
+              {errors.email && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.email}</p>}
             </div>
 
-            {/* Photo URL Field */}
+            {/* Photo URL */}
             <div>
-              <label
-                htmlFor="photoURL"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="photoURL" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Profile Photo URL (Optional)
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -217,18 +189,15 @@ const Register = () => {
                   id="photoURL"
                   name="photoURL"
                   type="url"
-                  className="focus:ring-amber-500 focus:border-amber-500 block w-full pl-10 pr-3 py-3 border-gray-300 rounded-md text-gray-900 placeholder-gray-400"
+                  className="block w-full pl-10 pr-3 py-3 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-amber-500 focus:border-amber-500"
                   placeholder="https://example.com/photo.jpg"
                 />
               </div>
             </div>
 
-            {/* Password Field */}
+            {/* Password */}
             <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                 Password
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -239,11 +208,10 @@ const Register = () => {
                   id="password"
                   name="password"
                   type={showPassword ? "text" : "password"}
-                  autoComplete="new-password"
                   required
-                  className={`focus:ring-amber-500 focus:border-amber-500 block w-full pl-10 pr-10 py-3 ${
-                    errors.password ? "border-red-300" : "border-gray-300"
-                  } rounded-md text-gray-900 placeholder-gray-400`}
+                  className={`block w-full pl-10 pr-10 py-3 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-700 rounded-md focus:ring-amber-500 focus:border-amber-500 ${
+                    errors.password ? "border-red-300 dark:border-red-500" : "border-gray-300 dark:border-gray-600"
+                  }`}
                   placeholder="••••••••"
                 />
                 <div className="absolute inset-y-0 right-0 pr-3 flex items-center">
@@ -252,31 +220,27 @@ const Register = () => {
                     onClick={() => setShowPassword(!showPassword)}
                     className="text-amber-500 hover:text-amber-400"
                   >
-                    {showPassword ? (
-                      <FaEyeSlash className="h-5 w-5" />
-                    ) : (
-                      <FaEye className="h-5 w-5" />
-                    )}
+                    {showPassword ? <FaEyeSlash className="h-5 w-5" /> : <FaEye className="h-5 w-5" />}
                   </button>
                 </div>
               </div>
               {errors.password && Array.isArray(errors.password) ? (
                 <div className="mt-1">
                   {errors.password.map((error, index) => (
-                    <p key={index} className="text-sm text-red-600">
+                    <p key={index} className="text-sm text-red-600 dark:text-red-400">
                       {error}
                     </p>
                   ))}
                 </div>
               ) : (
-                <p className="mt-1 text-sm text-red-600">{errors.password}</p>
+                errors.password && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.password}</p>
               )}
-              <p className="mt-1 text-xs text-gray-500">
-                Password must contain at least 6 characters with uppercase and
-                lowercase letters
+              <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                Password must contain at least 6 characters with uppercase and lowercase letters
               </p>
             </div>
 
+            {/* Submit */}
             <div>
               <button
                 type="submit"
@@ -287,43 +251,42 @@ const Register = () => {
             </div>
           </form>
 
+          {/* Divider */}
           <div className="mt-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300"></div>
+                <div className="w-full border-t border-gray-300 dark:border-gray-600"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">
+                <span className="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">
                   Or continue with
                 </span>
               </div>
             </div>
 
+            {/* Social */}
             <div className="mt-6 grid grid-cols-2 gap-3">
               <button
                 onClick={handleGoogleLogin}
-                className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-all duration-300"
+                className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 transition-all duration-300"
               >
                 <FaGoogle className="h-5 w-5 text-red-500 mr-2" />
                 Google
               </button>
               <button
                 onClick={handleGithubLogin}
-                className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 rounded-md shadow-sm bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 transition-all duration-300"
+                className="w-full inline-flex justify-center py-2 px-4 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm bg-white dark:bg-gray-700 text-sm font-medium text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600 transition-all duration-300"
               >
-                <FaGithub className="h-5 w-5 text-gray-800 mr-2" />
+                <FaGithub className="h-5 w-5 text-gray-800 dark:text-white mr-2" />
                 GitHub
               </button>
             </div>
           </div>
 
           <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-gray-600 dark:text-gray-400">
               Already have an account?{" "}
-              <Link
-                to="/login"
-                className="font-medium text-amber-600 hover:text-amber-500 transition-colors"
-              >
+              <Link to="/login" className="font-medium text-amber-600 hover:text-amber-500 transition-colors">
                 Sign in here
               </Link>
             </p>

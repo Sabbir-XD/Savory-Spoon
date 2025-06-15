@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, NavLink } from "react-router";
 import logo from "../../src/assets/image/logo.png";
 import useAuth from "../Hooks/useAuth";
+import { ThemeContext } from "../contexts/Theme/ThemeContext";
 
 const Navbar = () => {
   const { user, handleLogoutUser } = useAuth();
+  const {handleToggle} = useContext(ThemeContext);
   console.log(user);
   const links = (
     <>
@@ -91,7 +93,7 @@ const Navbar = () => {
       <div className="navbar-end space-x-4 mr-4">
         {/* Dark mode toggle */}
         <label className="swap swap-rotate hover:text-amber-600 dark:hover:text-amber-400">
-          <input type="checkbox" className="theme-controller" value="dark" />
+          <input type="checkbox" onClick={handleToggle}/>
           <svg
             className="swap-off fill-current w-6 h-6"
             xmlns="http://www.w3.org/2000/svg"

@@ -7,7 +7,6 @@ import { FaLeaf, FaWineGlassAlt, FaPepperHot } from "react-icons/fa";
 const Newsletter = () => {
   const [email, setEmail] = useState("");
   const [isSubscribed, setIsSubscribed] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);
   const [selectedCuisine, setSelectedCuisine] = useState(null);
 
   const cuisines = [
@@ -15,7 +14,7 @@ const Newsletter = () => {
     { name: "Asian", icon: <GiChopsticks />, color: "from-amber-300 to-yellow-200" },
     { name: "Vegetarian", icon: <FaLeaf />, color: "from-green-300 to-emerald-200" },
     { name: "Mediterranean", icon: <FaWineGlassAlt />, color: "from-sky-300 to-cyan-200" },
-    { name: "Spicy", icon: <FaPepperHot />, color: "from-rose-300 to-pink-200" }
+    { name: "Spicy", icon: <FaPepperHot />, color: "from-rose-300 to-pink-200" },
   ];
 
   const handleSubmit = (e) => {
@@ -27,14 +26,14 @@ const Newsletter = () => {
   };
 
   return (
-    <div className="relative py-16 overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
+    <div className="relative py-16 overflow-hidden bg-white dark:bg-gradient-to-br dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <div className="max-w-5xl mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="bg-white/5 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden border border-white/10"
+          className="bg-white/5 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden border border-white/10 dark:border-white/20"
         >
           <div className="grid grid-cols-1 lg:grid-cols-2">
             {/* Left Visual */}
@@ -64,6 +63,7 @@ const Newsletter = () => {
                   </p>
                 </div>
               </motion.div>
+
               {/* Floating Icon */}
               <motion.div 
                 className="absolute top-1/4 left-1/4 text-amber-400/20 text-8xl"
@@ -75,11 +75,7 @@ const Newsletter = () => {
             </div>
 
             {/* Right Form */}
-            <div
-              className="p-8 lg:p-12 bg-gradient-to-br from-stone-100 to-stone-50"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-            >
+            <div className="p-8 lg:p-12 bg-gradient-to-br from-stone-100 to-stone-50 dark:from-gray-800 dark:to-gray-900">
               <AnimatePresence mode="wait">
                 {isSubscribed ? (
                   <motion.div
@@ -94,14 +90,16 @@ const Newsletter = () => {
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7"></path>
                       </svg>
                     </div>
-                    <h3 className="text-2xl font-bold text-gray-800 mb-3">Welcome to Our Foodie Family!</h3>
-                    <p className="text-gray-600 mb-6">
+                    <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-3">
+                      Welcome to Our Foodie Family!
+                    </h3>
+                    <p className="text-gray-600 dark:text-gray-300 mb-6">
                       Your 20% discount code is on its way to your inbox.
                     </p>
                     <div className="bg-gradient-to-r from-amber-100 to-orange-100 border border-amber-200 rounded-xl p-4 inline-block">
                       <p className="text-lg font-mono font-bold text-amber-800">GOURMET20</p>
                     </div>
-                    <p className="text-sm text-gray-500 mt-6">
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-6">
                       Check your promotions tab if you don't see our email within 5 minutes.
                     </p>
                   </motion.div>
@@ -113,17 +111,15 @@ const Newsletter = () => {
                     exit={{ opacity: 0, x: -10 }}
                     className="h-full"
                   >
-                    <h2 className="text-3xl font-bold text-gray-800 mb-6">
+                    <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-6">
                       Taste the <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-orange-500">Difference</span>
                     </h2>
 
-                    <ul className="grid grid-cols-1 gap-3 mb-8 text-gray-700">
-                      {[
-                        { icon: <GiMeal className="text-amber-500" />, text: "Weekly chef-curated recipes" },
+                    <ul className="grid grid-cols-1 gap-3 mb-8 text-gray-700 dark:text-gray-200">
+                      {[{ icon: <GiMeal className="text-amber-500" />, text: "Weekly chef-curated recipes" },
                         { icon: <FiClock className="text-amber-500" />, text: "Early access to seasonal menus" },
                         { icon: <FiGift className="text-amber-500" />, text: "Exclusive discounts" },
-                        { icon: <GiCook className="text-amber-500" />, text: "Behind-the-scenes secrets" }
-                      ].map((item, i) => (
+                        { icon: <GiCook className="text-amber-500" />, text: "Behind-the-scenes secrets" }].map((item, i) => (
                         <motion.li
                           key={i}
                           className="flex items-start"
@@ -139,7 +135,7 @@ const Newsletter = () => {
 
                     <form onSubmit={handleSubmit} className="space-y-6">
                       <div>
-                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                           Your Email Address
                         </label>
                         <div className="relative">
@@ -149,15 +145,15 @@ const Newsletter = () => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
-                            className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 pl-10 bg-white/80 backdrop-blur-sm"
+                            className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-amber-400 focus:border-amber-400 pl-10 bg-white/80 dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                             placeholder="your@email.com"
                           />
-                          <FiMail className="absolute left-3 top-3.5 text-gray-400" />
+                          <FiMail className="absolute left-3 top-3.5 text-gray-400 dark:text-gray-500" />
                         </div>
                       </div>
 
                       <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-2">
                           Your Cuisine Preference (Optional)
                         </label>
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
@@ -170,7 +166,7 @@ const Newsletter = () => {
                               className={`p-2 rounded-lg border transition-all duration-200 hover:scale-105 ${
                                 selectedCuisine === cuisine.name
                                   ? `bg-gradient-to-r ${cuisine.color} text-gray-900 font-semibold border-transparent shadow-md`
-                                  : 'bg-white/80 backdrop-blur-sm border-gray-300 text-gray-700 hover:bg-gray-100'
+                                  : 'bg-white/80 dark:bg-gray-800 backdrop-blur-sm border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700'
                               }`}
                               onClick={() =>
                                 setSelectedCuisine(
@@ -201,9 +197,9 @@ const Newsletter = () => {
                         </span>
                       </motion.button>
 
-                      <p className="text-xs text-gray-500 text-center">
-                        By subscribing, you agree to our <a href="#" className="text-amber-600 hover:underline">Privacy Policy</a>.
-                        <br />We respect your inbox - no spam, ever.
+                      <p className="text-xs text-gray-500 dark:text-gray-400 text-center">
+                        By subscribing, you agree to our <a href="#" className="text-amber-600 hover:underline">Privacy Policy</a>.<br />
+                        We respect your inbox - no spam, ever.
                       </p>
                     </form>
                   </motion.div>

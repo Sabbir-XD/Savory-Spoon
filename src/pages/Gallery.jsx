@@ -1,14 +1,15 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FiZoomIn, FiX, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import BackgroundTitle from "../components/BackgroundTitle";
+import { motion } from "framer-motion";
 
 const GalleryPage = () => {
   const [open, setOpen] = useState(false);
   const [photoIndex, setPhotoIndex] = useState(0);
+  const [visibleImages, setVisibleImages] = useState(12);
 
-  // Restaurant-specific food images
   const galleryImages = [
     {
       id: 1,
@@ -142,8 +143,21 @@ const GalleryPage = () => {
     setOpen(true);
   };
 
+  const handleScroll = () => {
+    const nearBottom =
+      window.innerHeight + window.scrollY >= document.body.offsetHeight - 100;
+    if (nearBottom && visibleImages < galleryImages.length) {
+      setVisibleImages((prev) => Math.min(prev + 4, galleryImages.length));
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [visibleImages]);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 to-rose-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-12 px-4 dark:bg-gray-900 bg-white sm:px-6 lg:px-8 transition-colors duration-300">
       <div>
         <BackgroundTitle />
       </div>
@@ -151,17 +165,20 @@ const GalleryPage = () => {
       {/* Gallery Section */}
       <div className="max-w-7xl mx-auto mt-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {galleryImages.map((image, index) => (
-            <div
+          {galleryImages.slice(0, visibleImages).map((image, index) => (
+            <motion.div
               key={image.id}
               className="relative group overflow-hidden rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: index * 0.05 }}
             >
               <img
                 src={image.src}
                 alt={image.alt}
                 className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
               />
-              <div className="absolute inset-0  bg-opacity-0 group-hover:bg-opacity-30 transition-all duration-300 flex items-center justify-center">
+              <div className="absolute inset-0 bg-opacity-0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
                 <button
                   onClick={() => openLightbox(index)}
                   className="opacity-0 group-hover:opacity-100 transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 p-3 bg-white bg-opacity-80 rounded-full hover:bg-opacity-100"
@@ -174,7 +191,7 @@ const GalleryPage = () => {
                 <p className="text-white font-medium">{image.alt}</p>
                 <span className="text-xs text-amber-300">{image.category}</span>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>

@@ -22,7 +22,7 @@ import { deleteFood, fetchFoods } from "../api/foods";
 // };
 
 const MyFood = () => {
-  const { user, loading } = useAuth();
+  const { user, loading, setLoading } = useAuth();
   const queryClient = useQueryClient();
   const [selectedFood, setSelectedFood] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
