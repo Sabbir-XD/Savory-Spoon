@@ -105,7 +105,7 @@ const InteractiveChefsTable = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl font-bold text-gray-900 dark:text-white mt-10">
-            Meet Our <span className="text-orange-500">Expert Chefs</span>
+            Meet Our <span className="text-orange-400">Expert Chefs</span>
           </h2>
           <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto text-lg">
             Discover the talented chefs behind your dining experience and their signature creations

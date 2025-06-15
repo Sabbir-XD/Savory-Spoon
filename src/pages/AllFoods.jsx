@@ -25,7 +25,7 @@ const AllFoods = () => {
     <div>
       <BackgroundTitle />
       <FoodSearch onSearch={handleSearch} />
-      <div className="w-11/12 mx-auto mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div id="AllFoods" className="w-11/12 mx-auto mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {filteredData.length > 0 ? (
           filteredData.map((food) => <FoodCard key={food._id} food={food} />)
         ) : (

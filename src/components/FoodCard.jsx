@@ -99,9 +99,9 @@ const FoodCard = ({ food }) => {
         </div>
 
         {/* Description */}
-        <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2">
+        {/* <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2">
           {food.description || "Delicious food item with premium ingredients"}
-        </p>
+        </p> */}
 
         {/* Price and quantity */}
         <div className="flex justify-between items-center mb-4">
