@@ -1,7 +1,11 @@
 import axios from "axios";
 
-export const fetchFoods = async (email) => {
-  const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/foods/email/${email}`);
+export const fetchFoods = async (email, accessToken) => {
+  const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/foods/email/${email}`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
   return data;
 };
   

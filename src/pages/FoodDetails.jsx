@@ -20,14 +20,16 @@ const FoodDetails = () => {
   const [purchaseCount, setPurchaseCount] = useState(0);
   const navigate = useNavigate();
 
-useEffect(() => {
-   axios.get(`${import.meta.env.VITE_API_URL}/purchases`).then((response) => {
-     const { data } = response;
-     const filteredData = data.filter((purchase) => purchase.foodId === food._id);
-     console.log(filteredData);
-     setPurchaseCount(filteredData.length);
-   })
-})
+  useEffect(() => {
+    axios.get(`${import.meta.env.VITE_API_URL}/purchases`).then((response) => {
+      const { data } = response;
+      const filteredData = data.filter(
+        (purchase) => purchase.foodId === food._id
+      );
+      console.log(filteredData);
+      setPurchaseCount(filteredData.length);
+    });
+  });
   // Function to render star ratings
   const renderStars = (rating) => {
     return Array(5)

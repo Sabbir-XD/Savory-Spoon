@@ -7,25 +7,17 @@ import useAuth from "../Hooks/useAuth";
 import BackgroundTitle from "../components/BackgroundTitle";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
-import axios from "axios";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
 import { motion } from "framer-motion";
-import { deleteFood, fetchFoods } from "../api/foods";
-
-// const fetchFoods = async (email) => {
-//   const { data } = await axios.get(`${import.meta.env.VITE_API_URL}/foods/email/${email}`);
-//   return data;
-// };
-// const deleteFood = async (id) => {
-//   await axios.delete(`${import.meta.env.VITE_API_URL}/foods/${id}`);
-// };
+import useApplicationApi from "../Hooks/useApplicationApi";
 
 const MyFood = () => {
-  const { user, loading, setLoading } = useAuth();
+  const { user, loading } = useAuth();
   const queryClient = useQueryClient();
   const [selectedFood, setSelectedFood] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { fetchFoods, deleteFood } = useApplicationApi();
 
   const {
     data: foods = [],
@@ -71,10 +63,10 @@ const MyFood = () => {
         no-repeat
       `,
       customClass: {
-        popup: 'rounded-xl border border-amber-200 shadow-xl',
-        confirmButton: 'rounded-lg px-4 py-2',
-        cancelButton: 'rounded-lg px-4 py-2'
-      }
+        popup: "rounded-xl border border-amber-200 shadow-xl",
+        confirmButton: "rounded-lg px-4 py-2",
+        cancelButton: "rounded-lg px-4 py-2",
+      },
     }).then((result) => {
       if (result.isConfirmed) {
         deleteMutation.mutate(id);
@@ -89,7 +81,7 @@ const MyFood = () => {
       <BackgroundTitle title="My Food Collection" />
 
       <div className="flex flex-col md:flex-row justify-between items-center mb-8 py-8">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
@@ -99,26 +91,24 @@ const MyFood = () => {
             <FaUtensils className="text-amber-600 dark:text-amber-300 text-xl" />
           </div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
-            My <span className="text-amber-600 dark:text-amber-400">Food</span> Items
+            My <span className="text-amber-600 dark:text-amber-400">Food</span>{" "}
+            Items
           </h1>
         </motion.div>
 
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
+        <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Link
             to="/AddFood"
             className="inline-flex items-center gap-2 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white px-5 py-3 rounded-lg shadow-lg transition-all duration-300 group"
           >
-            <FaPlus className="group-hover:rotate-90 transition-transform duration-300" /> 
+            <FaPlus className="group-hover:rotate-90 transition-transform duration-300" />
             <span>Add New Food</span>
           </Link>
         </motion.div>
       </div>
 
       {foods.length === 0 ? (
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -132,12 +122,10 @@ const MyFood = () => {
               No Food Items Found
             </h3>
             <p className="text-gray-600 dark:text-amber-300 mb-6">
-              You haven't added any food items yet. Start by adding your first delicious item!
+              You haven't added any food items yet. Start by adding your first
+              delicious item!
             </p>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Link
                 to="/AddFood"
                 className="inline-flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-lg shadow transition-all duration-300"
@@ -214,14 +202,25 @@ const MyFood = () => {
                         </td>
                         <td className="py-5 px-6">
                           <div className="flex items-center">
-                            <div className={`h-3 rounded-full ${food.quantity > 10 ? 'bg-green-500' : 'bg-red-500'} flex-1 mr-2`} 
-                                 style={{ width: `${Math.min(100, food.quantity * 5)}%` }} />
-                            <span className={`text-sm font-medium ${
-                              food.quantity > 10 
-                                ? 'text-green-800 dark:text-green-300' 
-                                : 'text-red-800 dark:text-red-300'
-                            }`}>
-                              {food.quantity} {food.quantity === 1 ? 'item' : 'items'}
+                            <div
+                              className={`h-3 rounded-full ${
+                                food.quantity > 10
+                                  ? "bg-green-500"
+                                  : "bg-red-500"
+                              } flex-1 mr-2`}
+                              style={{
+                                width: `${Math.min(100, food.quantity * 5)}%`,
+                              }}
+                            />
+                            <span
+                              className={`text-sm font-medium ${
+                                food.quantity > 10
+                                  ? "text-green-800 dark:text-green-300"
+                                  : "text-red-800 dark:text-red-300"
+                              }`}
+                            >
+                              {food.quantity}{" "}
+                              {food.quantity === 1 ? "item" : "items"}
                             </span>
                           </div>
                         </td>
@@ -302,20 +301,25 @@ const MyFood = () => {
                           <span className="text-sm font-medium text-gray-600 dark:text-gray-400 mr-2">
                             Stock:
                           </span>
-                          <span className={`text-sm font-medium ${
-                            food.quantity > 10 
-                              ? 'text-green-600 dark:text-green-400' 
-                              : 'text-red-600 dark:text-red-400'
-                          }`}>
-                            {food.quantity} {food.quantity === 1 ? 'item' : 'items'}
+                          <span
+                            className={`text-sm font-medium ${
+                              food.quantity > 10
+                                ? "text-green-600 dark:text-green-400"
+                                : "text-red-600 dark:text-red-400"
+                            }`}
+                          >
+                            {food.quantity}{" "}
+                            {food.quantity === 1 ? "item" : "items"}
                           </span>
                         </div>
                         <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                          <div 
+                          <div
                             className={`h-2 rounded-full ${
-                              food.quantity > 10 ? 'bg-green-500' : 'bg-red-500'
-                            }`} 
-                            style={{ width: `${Math.min(100, food.quantity * 5)}%` }}
+                              food.quantity > 10 ? "bg-green-500" : "bg-red-500"
+                            }`}
+                            style={{
+                              width: `${Math.min(100, food.quantity * 5)}%`,
+                            }}
                           />
                         </div>
                       </div>

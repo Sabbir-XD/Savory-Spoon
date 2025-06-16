@@ -45,7 +45,9 @@ const Register = () => {
     e.preventDefault();
     const form = e.target;
     const formData = new FormData(form);
-    const { name, email, password, photoURL } = Object.fromEntries(formData.entries());
+    const { name, email, password, photoURL } = Object.fromEntries(
+      formData.entries()
+    );
 
     const newErrors = {};
     if (!name) newErrors.name = "Name is required";
@@ -116,7 +118,7 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-amber-50 dark:bg-gray-900 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 to-amber-200 dark:from-gray-900 dark:to-gray-800 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <ToastContainer position="top-center" autoClose={3000} />
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
@@ -132,7 +134,10 @@ const Register = () => {
           <form className="mb-0 space-y-6" onSubmit={handleSubmit}>
             {/* Name */}
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="name"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Full Name
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -145,17 +150,26 @@ const Register = () => {
                   type="text"
                   required
                   className={`block w-full pl-10 pr-3 py-3 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-700 rounded-md focus:ring-amber-500 focus:border-amber-500 ${
-                    errors.name ? "border-red-300 dark:border-red-500" : "border-gray-300 dark:border-gray-600"
+                    errors.name
+                      ? "border-red-300 dark:border-red-500"
+                      : "border-gray-300 dark:border-gray-600"
                   }`}
                   placeholder="John Doe"
                 />
               </div>
-              {errors.name && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.name}</p>}
+              {errors.name && (
+                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                  {errors.name}
+                </p>
+              )}
             </div>
 
             {/* Email */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Email address
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -168,17 +182,26 @@ const Register = () => {
                   type="email"
                   required
                   className={`block w-full pl-10 pr-3 py-3 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-700 rounded-md focus:ring-amber-500 focus:border-amber-500 ${
-                    errors.email ? "border-red-300 dark:border-red-500" : "border-gray-300 dark:border-gray-600"
+                    errors.email
+                      ? "border-red-300 dark:border-red-500"
+                      : "border-gray-300 dark:border-gray-600"
                   }`}
                   placeholder="your@email.com"
                 />
               </div>
-              {errors.email && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.email}</p>}
+              {errors.email && (
+                <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                  {errors.email}
+                </p>
+              )}
             </div>
 
             {/* Photo URL */}
             <div>
-              <label htmlFor="photoURL" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="photoURL"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Profile Photo URL (Optional)
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -197,7 +220,10 @@ const Register = () => {
 
             {/* Password */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Password
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -210,7 +236,9 @@ const Register = () => {
                   type={showPassword ? "text" : "password"}
                   required
                   className={`block w-full pl-10 pr-10 py-3 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 bg-white dark:bg-gray-700 rounded-md focus:ring-amber-500 focus:border-amber-500 ${
-                    errors.password ? "border-red-300 dark:border-red-500" : "border-gray-300 dark:border-gray-600"
+                    errors.password
+                      ? "border-red-300 dark:border-red-500"
+                      : "border-gray-300 dark:border-gray-600"
                   }`}
                   placeholder="••••••••"
                 />
@@ -220,23 +248,35 @@ const Register = () => {
                     onClick={() => setShowPassword(!showPassword)}
                     className="text-amber-500 hover:text-amber-400"
                   >
-                    {showPassword ? <FaEyeSlash className="h-5 w-5" /> : <FaEye className="h-5 w-5" />}
+                    {showPassword ? (
+                      <FaEyeSlash className="h-5 w-5" />
+                    ) : (
+                      <FaEye className="h-5 w-5" />
+                    )}
                   </button>
                 </div>
               </div>
               {errors.password && Array.isArray(errors.password) ? (
                 <div className="mt-1">
                   {errors.password.map((error, index) => (
-                    <p key={index} className="text-sm text-red-600 dark:text-red-400">
+                    <p
+                      key={index}
+                      className="text-sm text-red-600 dark:text-red-400"
+                    >
                       {error}
                     </p>
                   ))}
                 </div>
               ) : (
-                errors.password && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{errors.password}</p>
+                errors.password && (
+                  <p className="mt-1 text-sm text-red-600 dark:text-red-400">
+                    {errors.password}
+                  </p>
+                )
               )}
               <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
-                Password must contain at least 6 characters with uppercase and lowercase letters
+                Password must contain at least 6 characters with uppercase and
+                lowercase letters
               </p>
             </div>
 
@@ -286,7 +326,10 @@ const Register = () => {
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600 dark:text-gray-400">
               Already have an account?{" "}
-              <Link to="/login" className="font-medium text-amber-600 hover:text-amber-500 transition-colors">
+              <Link
+                to="/login"
+                className="font-medium text-amber-600 hover:text-amber-500 transition-colors"
+              >
                 Sign in here
               </Link>
             </p>

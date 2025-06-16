@@ -1,5 +1,4 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 import moment from "moment";
 import { FaTrash, FaUtensils } from "react-icons/fa";
 import { FaBangladeshiTakaSign } from "react-icons/fa6";
@@ -9,21 +8,13 @@ import Loading from "../components/Loading";
 import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import BackgroundTitle from "../components/BackgroundTitle";
-
-const fetchOrders = async (email) => {
-  const { data } = await axios.get(
-    `${import.meta.env.VITE_API_URL}/purchases/email/${email}`
-  );
-  return data;
-};
-
-const deleteOrder = async (id) => {
-  await axios.delete(`${import.meta.env.VITE_API_URL}/purchases/${id}`);
-};
+import useApplicationApi from "../Hooks/useApplicationApi";
 
 const MyOrders = () => {
   const { user, loading } = useAuth();
+  const { fetchOrders , deleteOrder} = useApplicationApi();
   const queryClient = useQueryClient();
+  
 
   const {
     data: orders = [],
