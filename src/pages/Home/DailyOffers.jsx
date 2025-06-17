@@ -27,7 +27,7 @@ const DailyOffer = () => {
       title: "Chicken Caesar Wrap",
       price: "180",
       image:
-        "https://thumbs.dreamstime.com/b/grilled-chicken-caesar-wrap-isolated-white-background-grilled-chicken-caesar-wrap-isolated-white-background-showcasing-366949715.jpg",
+        "https://i.ibb.co/DDXk0Szm/grilled-chicken-caesar-wrap.webp",
       description:
         "Grilled chicken, romaine lettuce and parmesan in a soft wrap",
     },

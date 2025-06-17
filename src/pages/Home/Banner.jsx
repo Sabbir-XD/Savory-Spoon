@@ -14,7 +14,6 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-
 const Banner = () => {
   const banners = [
     {
@@ -59,7 +58,7 @@ const Banner = () => {
       id: 5,
       title: "Artisan Desserts",
       description: "Handcrafted sweets with seasonal ingredients",
-      image: "https://images.unsplash.com/photo-1551024506-0bccd828d307",
+      image: "https://i.ibb.co/CKD2TfK2/Artisan-Desserts.jpg",
       tag: "Sweet Ending",
       icon: <FaStar className="text-yellow-500" />,
       accentColor: "from-yellow-500/20 to-yellow-800/10",
@@ -86,11 +85,11 @@ const Banner = () => {
           prevEl: ".custom-prev",
         }}
         modules={[Autoplay, Pagination, Navigation]}
-        className="h-screen"
+        className="h-[60vh] sm:h-[70vh] lg:h-[80vh]"
       >
         {banners.map((banner) => (
           <SwiperSlide key={banner.id}>
-            <div className="relative h-[80vh] min-h-[600px] w-full">
+            <div className="relative h-[60vh] sm:h-[70vh] lg:h-[80vh] min-h-[400px] lg:min-h-[600px] w-full">
               {/* Gradient Overlay */}
               <div
                 className={`absolute inset-0 bg-gradient-to-b ${banner.accentColor} via-black/60 to-black/70`}
@@ -103,24 +102,24 @@ const Banner = () => {
               ></div>
 
               {/* Content */}
-              <div className="relative z-10 h-full flex flex-col justify-center items-start px-16 lg:px-24">
-                <div className="flex items-center mb-4 bg-black/30 backdrop-blur-sm px-4 py-2 rounded-full border border-white/20">
+              <div className="relative z-10 h-full flex flex-col justify-center items-start px-4 sm:px-8 lg:px-24">
+                <div className="flex items-center mb-3 sm:mb-4 bg-black/30 backdrop-blur-sm px-3 sm:px-4 py-1 sm:py-2 rounded-full border border-white/20">
                   {banner.icon}
-                  <span className="ml-2 text-sm font-medium text-white">
+                  <span className="ml-2 text-xs sm:text-sm font-medium text-white">
                     {banner.tag}
                   </span>
                 </div>
 
-                <h2 className="text-4xl lg:text-5xl font-bold mb-4 text-white leading-tight max-w-2xl">
+                <h2 className="text-2xl sm:text-3xl lg:text-5xl font-bold mb-4 text-white leading-tight max-w-2xl">
                   {banner.title}
                 </h2>
 
-                <p className="text-xl mb-8 text-white/90 max-w-xl">
+                <p className="text-base sm:text-lg lg:text-xl mb-6 sm:mb-8 text-white/90 max-w-xl">
                   {banner.description}
                 </p>
 
-                <div className="flex gap-4">
-                  <button className="px-8 py-3 bg-amber-600 hover:bg-amber-700 rounded-full font-medium transition-all duration-300 transform hover:scale-105 flex items-center gap-2 shadow-lg">
+                <div className="flex gap-3 sm:gap-4">
+                  <button className="px-6 sm:px-8 py-2 sm:py-3 text-sm sm:text-base bg-amber-600 hover:bg-amber-700 rounded-full font-medium transition-all duration-300 transform hover:scale-105 flex items-center gap-2 shadow-lg">
                     View All Foods <FaArrowRight />
                   </button>
                 </div>
@@ -131,10 +130,10 @@ const Banner = () => {
       </Swiper>
 
       {/* Custom Pagination */}
-      <div className="custom-pagination absolute bottom-8 left-1/2 -translate-x-1/2 transform z-10 flex gap-2"></div>
+      <div className="custom-pagination absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 transform z-10 flex gap-2"></div>
 
       {/* Custom Navigation */}
-      <button className="custom-prev absolute left-6 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 text-white p-3 rounded-full backdrop-blur-sm transition-all duration-300 opacity-0 group-hover:opacity-100">
+      <button className="hidden sm:flex custom-prev absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 text-white p-2 sm:p-3 rounded-full backdrop-blur-sm transition-all duration-300 opacity-0 group-hover:opacity-100">
         <svg
           width="24"
           height="24"
@@ -150,7 +149,7 @@ const Banner = () => {
           />
         </svg>
       </button>
-      <button className="custom-next absolute right-6 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 text-white p-3 rounded-full backdrop-blur-sm transition-all duration-300 opacity-0 group-hover:opacity-100">
+      <button className="hidden sm:flex custom-next absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-10 bg-black/30 hover:bg-black/50 text-white p-2 sm:p-3 rounded-full backdrop-blur-sm transition-all duration-300 opacity-0 group-hover:opacity-100">
         <svg
           width="24"
           height="24"
