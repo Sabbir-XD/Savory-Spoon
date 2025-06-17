@@ -13,20 +13,21 @@ import {
 import { useEffect, useState } from "react";
 import { Link, useLoaderData, useNavigate } from "react-router";
 import axios from "axios";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const FoodDetails = () => {
   const food = useLoaderData();
+  const axiosSecure = useAxiosSecure();
   const [isFavorite, setIsFavorite] = useState(false);
   const [purchaseCount, setPurchaseCount] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`${import.meta.env.VITE_API_URL}/purchases`).then((response) => {
+    axiosSecure.get(`/purchases`).then((response) => {
       const { data } = response;
       const filteredData = data.filter(
         (purchase) => purchase.foodId === food._id
       );
-      console.log(filteredData);
       setPurchaseCount(filteredData.length);
     });
   });

@@ -1,13 +1,13 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import useAxiosSecure from "./useAxiosSecure";
 
 const useApplicationApi = () => {
   const axiosSecure = useAxiosSecure();
 
   // Debug only once
-  useEffect(() => {
-    console.log("Axios Secure Instance Initialized:", axiosSecure);
-  }, [axiosSecure]);
+  // useEffect(() => {
+  //    console.log("Axios Secure Instance Initialized:", axiosSecure);
+  // }, [axiosSecure]);
 
   // Fetch foods by user email
   const fetchFoods = async (email) => {
@@ -21,9 +21,10 @@ const useApplicationApi = () => {
   };
 
   // Delete a specific food
-  const deleteFood = async (id) => {
+  const deleteFood = async ({id, email}) => {
+    console.log(email);
     try {
-      const res = await axiosSecure.delete(`/foods/${id}`);
+      const res = await axiosSecure.delete(`/foods/${id}?email=${email}`);
       return res.data;
     } catch (error) {
       console.error("Error deleting food:", error);

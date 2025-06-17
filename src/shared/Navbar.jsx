@@ -7,7 +7,7 @@ import { ThemeContext } from "../contexts/Theme/ThemeContext";
 const Navbar = () => {
   const { user, handleLogoutUser } = useAuth();
   const {handleToggle} = useContext(ThemeContext);
-  console.log(user);
+
   const links = (
     <>
       <li>

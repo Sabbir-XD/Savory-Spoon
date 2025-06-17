@@ -69,7 +69,8 @@ const MyFood = () => {
       },
     }).then((result) => {
       if (result.isConfirmed) {
-        deleteMutation.mutate(id);
+        console.log(user.email);
+        deleteMutation.mutate({id, email: user?.email});
       }
     });
   };

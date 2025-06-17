@@ -26,6 +26,7 @@ export const router = createBrowserRouter([
       {
         path: "/AllFoods",
         loader: () => fetch(`${import.meta.env.VITE_API_URL}/foods`),
+        hydrateFallbackElement: <Error />,
         element: <AllFoods />,
       },
       {
@@ -44,12 +45,14 @@ export const router = createBrowserRouter([
         path: "/food/:id",
         loader: ({ params }) =>
           fetch(`${import.meta.env.VITE_API_URL}/food/${params.id}`),
+        hydrateFallbackElement: <Error />,
         element: <FoodDetails />,
       },
       {
         path: "/purchase/:id",
         loader: ({ params }) =>
           fetch(`${import.meta.env.VITE_API_URL}/food/${params.id}`),
+        hydrateFallbackElement: <Error />,
         element: (
           <PrivetRoute>
             <PurchaseFood />
@@ -67,6 +70,7 @@ export const router = createBrowserRouter([
       {
         path: "/MyFood",
         loader: () => fetch(`${import.meta.env.VITE_API_URL}/foods`),
+        hydrateFallbackElement: <Error />,
         element: (
           <PrivetRoute>
             <MyFood />

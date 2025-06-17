@@ -8,11 +8,12 @@ import {
 } from "react-icons/fi";
 import useAuth from "../Hooks/useAuth";
 import BackgroundTitle from "../components/BackgroundTitle";
-import axios from "axios";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const AddFood = () => {
   const { user } = useAuth();
+  const axiosSecure = useAxiosSecure();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const categories = [
@@ -44,8 +45,7 @@ const AddFood = () => {
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
 
-    axios
-      .post(`${import.meta.env.VITE_API_URL}/foods`, data)
+    axiosSecure.post(`/foods`, data)
       .then((res) => {
         if (res.data.insertedId) {
           Swal.fire({

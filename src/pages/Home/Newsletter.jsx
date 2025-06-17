@@ -19,7 +19,6 @@ const Newsletter = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("Subscribed with:", email, "Cuisine:", selectedCuisine);
     setIsSubscribed(true);
     setEmail("");
     setTimeout(() => setIsSubscribed(false), 5000);

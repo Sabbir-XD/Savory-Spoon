@@ -66,18 +66,13 @@ const CounterSection = () => {
 
   return (
     <div className="relative overflow-hidden bg-gray-900">
-      {/* Background image with parallax effect */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-fixed z-0 opacity-30"
         style={{
           backgroundImage: `url('https://images.unsplash.com/photo-1544025162-d76694265947?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1469&q=80')`,
         }}
       />
-
-      {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-gray-600/20 to-gray-900/50 z-10" />
-
-      {/* Content */}
       <div className="relative z-20 py-24">
         <motion.div
           initial="hidden"
@@ -93,13 +88,12 @@ const CounterSection = () => {
               whileHover="hover"
               className="flex flex-col items-center text-center p-6 group"
             >
-              {/* Animated circle with floating elements */}
               <div className="relative w-44 h-44 mb-8">
-                {/* Outer glow */}
                 <div className="absolute inset-0 rounded-full bg-orange-600/20 blur-lg group-hover:bg-orange-600/30 transition-all duration-500" />
-                
-                {/* Main circle */}
-                <div className={`absolute inset-0 rounded-full ${item.color} flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-500`}>
+
+                <div
+                  className={`absolute inset-0 rounded-full ${item.color} flex items-center justify-center shadow-xl group-hover:shadow-2xl transition-all duration-500`}
+                >
                   <div className="absolute inset-4 rounded-full bg-gray-900 flex items-center justify-center border border-gray-800">
                     <span className="text-3xl font-bold text-amber-400">
                       <CountUp
@@ -107,21 +101,22 @@ const CounterSection = () => {
                         end={item.number}
                         duration={3}
                         separator=","
-                        scrollSpyDelay={500}
                         enableScrollSpy
-                      />
+                        scrollSpyDelay={500}
+                      >
+                        {({ countUpRef }) => (
+                          <span ref={countUpRef} />
+                        )}
+                      </CountUp>
                       <span className="text-orange-400">+</span>
                     </span>
                   </div>
                 </div>
 
-                {/* Floating icon */}
                 <motion.div
                   className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gray-900 p-3 rounded-full shadow-lg border border-gray-800"
                   initial={{ y: 0 }}
-                  animate={{
-                    y: [0, -15, 0],
-                  }}
+                  animate={{ y: [0, -15, 0] }}
                   transition={{
                     duration: 3,
                     repeat: Infinity,
@@ -131,7 +126,6 @@ const CounterSection = () => {
                   {item.icon}
                 </motion.div>
 
-                {/* Floating dots */}
                 {[...Array(4)].map((_, i) => (
                   <motion.div
                     key={i}
@@ -158,16 +152,16 @@ const CounterSection = () => {
               <h3 className="text-xl font-bold text-white mb-2 group-hover:text-amber-400 transition-colors">
                 {item.label}
               </h3>
-              <p className="text-amber-500 text-sm font-medium tracking-wider">SINCE 2015</p>
+              <p className="text-amber-500 text-sm font-medium tracking-wider">
+                SINCE 2015
+              </p>
             </motion.div>
           ))}
         </motion.div>
 
-        {/* Decorative elements */}
         <div className="absolute -bottom-20 -left-20 w-72 h-72 rounded-full bg-orange-600/10 blur-3xl" />
         <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full bg-amber-600/10 blur-3xl" />
-        
-        {/* Subtle grid pattern */}
+
         <div className="absolute inset-0 opacity-10 [mask-image:linear-gradient(to_bottom,transparent,black)]">
           <div className="absolute inset-0 bg-[size:20px_20px] [background-image:linear-gradient(to_right,rgba(255,255,255,0.3)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.3)_1px,transparent_1px)]"></div>
         </div>

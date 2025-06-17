@@ -12,11 +12,13 @@ import "react-toastify/dist/ReactToastify.css";
 import useAuth from "../Hooks/useAuth";
 import axios from "axios";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const PurchaseFood = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const food = useLoaderData();
+  const axiosSecure = useAxiosSecure();
 
   const [formData, setFormData] = useState({ quantity: 1 });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -79,9 +81,8 @@ const PurchaseFood = () => {
 
     try {
       // 1. Post purchase to DB
-      await axios.post(`${import.meta.env.VITE_API_URL}/purchases`, purchaseData)
+      await axiosSecure.post(`/purchases`, purchaseData)
       .then((res) => {
-        console.log(res.data);
         if (res.data.insertedId) {
           Swal.fire({
             title: "Food Purchase successfully!",
@@ -89,7 +90,6 @@ const PurchaseFood = () => {
             draggable: true,
           });
       }}).catch((err) => {
-        console.log(err);
         Swal.fire({
           title: "Error purchasing food!",
           text: err.message,
@@ -99,7 +99,7 @@ const PurchaseFood = () => {
 
       // 2. Update food quantity
       const newQuantity = availableQuantity - selectedQuantity;
-      await axios.patch(`${import.meta.env.VITE_API_URL}/foods/${food._id}`, {
+      await axiosSecure.patch(`/foods/${food._id}`, {
         quantity: newQuantity >= 0 ? newQuantity : 0,
       });
 
