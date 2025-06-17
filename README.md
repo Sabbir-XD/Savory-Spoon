@@ -81,4 +81,14 @@ We are seeking a skilled MERN Stack Developer to redesign and enhance our restau
 - **react-icons** `^5.5.0` — Icon packs for React
 
 
+---
+
+## 🧑‍💻 Developer
+
+**Sabbir Hossain**  
+📧 Email: [sabbirislam9404@gmail.com]  
+🌐 Portfolio: [your-portfolio-link.com] *(optional)*
+
+---
+
 

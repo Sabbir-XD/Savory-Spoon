@@ -46,7 +46,7 @@ const PurchaseFood = () => {
     if (isOwnFood) {
       toast.error("You cannot purchase your own food item!", {
         position: "top-center",
-        autoClose: 5000,
+        autoClose: 3000,
         theme: "colored",
       });
       return;

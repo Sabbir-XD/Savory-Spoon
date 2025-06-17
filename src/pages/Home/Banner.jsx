@@ -13,6 +13,7 @@ import {
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+import { Link } from "react-router";
 
 const Banner = () => {
   const banners = [
@@ -119,9 +120,9 @@ const Banner = () => {
                 </p>
 
                 <div className="flex gap-3 sm:gap-4">
-                  <button className="px-6 sm:px-8 py-2 sm:py-3 text-sm sm:text-base bg-amber-600 hover:bg-amber-700 rounded-full font-medium transition-all duration-300 transform hover:scale-105 flex items-center gap-2 shadow-lg">
+                  <Link to="/AllFoods" className="px-6 sm:px-8 py-2 sm:py-3 text-sm sm:text-base bg-amber-600 hover:bg-amber-700 rounded-full font-medium transition-all duration-300 transform hover:scale-105 flex items-center gap-2 shadow-lg">
                     View All Foods <FaArrowRight />
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
