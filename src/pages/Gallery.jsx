@@ -157,13 +157,13 @@ const GalleryPage = () => {
   }, [visibleImages]);
 
   return (
-    <div className="min-h-screen py-12 px-4 dark:bg-gray-900 bg-white sm:px-6 lg:px-8 transition-colors duration-300">
+    <div className="min-h-screen  dark:bg-gray-900 bg-white  transition-colors duration-300">
       <div>
         <BackgroundTitle />
       </div>
 
       {/* Gallery Section */}
-      <div className="max-w-7xl mx-auto mt-10">
+      <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8 mt-10">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {galleryImages.slice(0, visibleImages).map((image, index) => (
             <motion.div
