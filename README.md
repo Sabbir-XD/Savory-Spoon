@@ -2,10 +2,8 @@
 
 **Savory Spoon** is a modern, responsive **Restaurant Management Web Application** built using the **MERN Stack**. This platform is designed to enhance the digital presence of restaurants, improve customer interaction, and streamline backend operations for better efficiency.
 
-![Screenshot](![Uploading image.png…]()
-)  
+![Screenshot]()  
 
-![Uploading image.png…]()
 
 <!-- Replace this with your actual project screenshot URL -->
 
