@@ -14,7 +14,7 @@ const TopSellingFood = () => {
   }, []);
 
   return (
-    <div className="w-11/12 mx-auto  mt-10 px-4">
+    <div className="w-11/12 mx-auto mt-10 px-4">
       <div className="text-center mb-8">
         <h2 className="text-3xl font-bold">
           🍽️ Top <span className="text-orange-400">Selling Foods</span>
