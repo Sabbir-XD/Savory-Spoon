@@ -60,8 +60,8 @@ const MyOrders = () => {
   return (
     <div>
       <BackgroundTitle title="My Orders" />
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex flex-col md:flex-row justify-between items-center mb-8">
+      <div className="container mx-auto px-2 sm:px-6 lg:px-8 py-6">
+        <div className="flex flex-col md:flex-row justify-between items-center mb-4">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
@@ -223,7 +223,7 @@ const MyOrders = () => {
                   transition={{ duration: 0.3, delay: index * 0.05 }}
                   className="bg-white dark:bg-gray-900 rounded-xl shadow-md overflow-hidden border border-amber-100 dark:border-amber-800"
                 >
-                  <div className="p-5">
+                  <div className="p-3 lg:p-5">
                     <div className="flex items-start">
                       <div className="flex-shrink-0 h-20 w-20 rounded-lg overflow-hidden border border-amber-100 dark:border-amber-700 mr-4">
                         <img
@@ -238,10 +238,14 @@ const MyOrders = () => {
                         </h3>
                         <div className="flex items-center mt-1">
                           <FaBangladeshiTakaSign className="text-amber-600 dark:text-amber-400 mr-1" />
-                          <span className="font-medium">{order.price}</span>
-                          <span className="mx-2 text-gray-400">×</span>
-                          <span className="font-medium">{order.quantity}</span>
-                          <span className="mx-2 text-gray-400">=</span>
+                          <span className="text-sm font-medium">
+                            {order.price}
+                          </span>
+                          <span className="text-sm mx-2 text-gray-400">×</span>
+                          <span className="text-sm font-medium">
+                            {order.quantity}
+                          </span>
+                          <span className="text-sm mx-2 text-gray-400">=</span>
                           <FaBangladeshiTakaSign className="text-amber-600 dark:text-amber-400 mr-1" />
                           <span className="font-bold">
                             {order.totalAmount ||
@@ -249,17 +253,17 @@ const MyOrders = () => {
                           </span>
                         </div>
                         <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                          From: {order.foodOwnerName || order.foodOwnerEmail}
+                          {order.foodOwnerName || order.foodOwnerEmail}
                         </div>
                         <div className="text-sm text-gray-600 dark:text-gray-400 mt-1">
-                          {moment(order.purchaseDate || order.createdAt).format(
+                          From: {moment(order.purchaseDate || order.createdAt).format(
                             "MMM Do YYYY, h:mm a"
                           )}
                         </div>
                       </div>
                     </div>
 
-                    <div className="mt-4 flex justify-end">
+                    <div className="mt-2 flex justify-end">
                       <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}

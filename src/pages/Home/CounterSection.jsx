@@ -65,7 +65,7 @@ const CounterSection = () => {
   };
 
   return (
-    <div className="relative overflow-hidden bg-gray-900">
+    <div className="relative overflow-hidden bg-gray-900 mt-10">
       <div
         className="absolute inset-0 bg-cover bg-center bg-fixed z-0 opacity-30"
         style={{

@@ -14,7 +14,7 @@ import { Link } from "react-router";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-b from-gray-900 to-gray-800 text-white pt-16 pb-8 px-4 sm:px-8 lg:px-16">
+    <footer className="bg-gradient-to-b from-gray-900 to-gray-800 text-white mt-10 pt-16 pb-8 px-4 sm:px-8 lg:px-16">
       <div className="max-w-7xl mx-auto">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">

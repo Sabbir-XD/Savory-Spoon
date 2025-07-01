@@ -14,6 +14,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ const Register = () => {
     handleGoogleLoginUser,
   } = useAuth();
   const location = useLocation();
+  const axiosSecure = useAxiosSecure();
 
   const validatePassword = (password) => {
     const errors = [];
@@ -79,6 +81,26 @@ const Register = () => {
         handleUpdateProfile({ displayName: name, photoURL: photoURL });
         setUser({ ...user, displayName: name, photoURL: photoURL });
 
+        const data = {
+          name: name,
+          email: email,
+          photoURL: photoURL,
+          role: "user",
+          status: "active",
+          uid: user.uid,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        };
+
+        axiosSecure
+          .post("/users", data)
+          .then((res) => {
+            console.log(res.data);
+          })
+          .catch((error) => {
+            console.error("Error creating user:", error);
+          });
+
         Swal.fire({
           position: "center",
           icon: "success",
@@ -86,6 +108,7 @@ const Register = () => {
           showConfirmButton: false,
           timer: 2000,
         });
+
         navigate(location?.state || "/login");
       })
       .catch((error) => {
@@ -99,6 +122,29 @@ const Register = () => {
     handleGoogleLoginUser()
       .then((result) => {
         const user = result.user;
+
+        const data = {
+          name: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+          role: "user",
+          status: "active",
+          uid: user.uid,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString(),
+        };
+
+        // Put (upsert) by email
+        axiosSecure
+          .put("/users", data)
+          .then((res) => {
+            console.log(res.data);
+            navigate(location?.state || "/");
+          })
+          .catch((error) => {
+            console.error("Error creating user:", error);
+          });
+
         Swal.fire({
           position: "center",
           icon: "success",
@@ -106,6 +152,7 @@ const Register = () => {
           showConfirmButton: false,
           timer: 2000,
         });
+
         navigate(location?.state || "/");
       })
       .catch((error) => {
@@ -118,10 +165,10 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 to-amber-200 dark:from-gray-900 dark:to-gray-800 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 to-amber-100 dark:from-gray-900 dark:to-gray-800 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <ToastContainer position="top-center" autoClose={3000} />
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
+        <h2 className="text-center text-3xl font-extrabold text-gray-900 dark:text-white">
           Create Your Account
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-400">
@@ -129,7 +176,7 @@ const Register = () => {
         </p>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md lg:max-w-lg">
         <div className="bg-white dark:bg-gray-800 py-8 px-6 shadow-lg rounded-lg sm:px-10 border border-gray-200 dark:border-gray-700">
           <form className="mb-0 space-y-6" onSubmit={handleSubmit}>
             {/* Name */}

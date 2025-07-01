@@ -6,10 +6,26 @@ import { ThemeContext } from "../contexts/Theme/ThemeContext";
 
 const Navbar = () => {
   const { user, handleLogoutUser } = useAuth();
-  const {handleToggle} = useContext(ThemeContext);
+  const { handleToggle } = useContext(ThemeContext);
 
   const links = (
     <>
+      {user ? (
+        <li>
+          <NavLink
+            to="/dashboard"
+            className={({ isActive }) =>
+              isActive
+                ? "text-amber-600 font-semibold dark:text-amber-400"
+                : "hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
+            }
+          >
+            Dashboard
+          </NavLink>
+        </li>
+      ) : (
+        ""
+      )}
       <li>
         <NavLink
           to="/"
@@ -50,7 +66,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar  dark:bg-black shadow-sm transition-all duration-300 top-0 z-50">
+    <div className="navbar sticky top-0 z-50 bg-white dark:bg-gray-900 shadow transition-all duration-300">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -93,7 +109,7 @@ const Navbar = () => {
       <div className="navbar-end space-x-4 mr-4">
         {/* Dark mode toggle */}
         <label className="swap swap-rotate hover:text-amber-600 dark:hover:text-amber-400">
-          <input type="checkbox" onClick={handleToggle}/>
+          <input type="checkbox" onClick={handleToggle} />
           <svg
             className="swap-off fill-current w-6 h-6"
             xmlns="http://www.w3.org/2000/svg"

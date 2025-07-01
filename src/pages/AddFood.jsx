@@ -71,7 +71,7 @@ const AddFood = () => {
     <div className="min-h-screen bg-amber-50 dark:bg-gray-900">
       <BackgroundTitle title="Add New Food Item" />
 
-      <div className="py-12 px-4 sm:px-6 lg:px-8 -mt-10">
+      <div className="py-12 px-1 sm:px-6 lg:px-8 -mt-10">
         <div className="max-w-2xl mx-auto">
           <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl overflow-hidden border border-amber-100 dark:border-gray-700">
             <div className="bg-amber-600 px-6 py-3 dark:bg-amber-700">
@@ -85,7 +85,7 @@ const AddFood = () => {
               </div>
             </div>
 
-            <div className="p-8">
+            <div className="p-2 lg:p-6">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div>

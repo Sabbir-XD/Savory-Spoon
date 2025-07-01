@@ -12,6 +12,9 @@ import PurchaseFood from "../pages/PurchaseFood";
 import MyOrders from "../pages/MyOrders";
 import MyFood from "../pages/MyFood";
 import Error from "../pages/Error";
+import DashboardLayout from "../layouts/DashboardLayout";
+import Dashboard from "../pages/Dashboard/Dashboard";
+import ProfileDashboard from "../pages/Dashboard/ProfileDashboard";
 
 export const router = createBrowserRouter([
   {
@@ -60,14 +63,6 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/MyOrders",
-        element: (
-          <PrivetRoute>
-            <MyOrders />
-          </PrivetRoute>
-        ),
-      },
-      {
         path: "/MyFood",
         loader: () => fetch(`${import.meta.env.VITE_API_URL}/foods`),
         hydrateFallbackElement: <Error />,
@@ -84,6 +79,50 @@ export const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register />,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout />,
+    children: [
+      {
+        index: true,
+        element: <Dashboard />,
+      },
+      {
+        path: "/dashboard/MyFood",
+        loader: () => fetch(`${import.meta.env.VITE_API_URL}/foods`),
+        hydrateFallbackElement: <Error />,
+        element: (
+          <PrivetRoute>
+            <MyFood />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/dashboard/AddFood",
+        element: (
+          <PrivetRoute>
+            <AddFood />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/dashboard/MyOrders",
+        element: (
+          <PrivetRoute>
+            <MyOrders />
+          </PrivetRoute>
+        ),
+      },
+      {
+        path: "/dashboard/profile",
+        element: (
+          <PrivetRoute>
+            <ProfileDashboard />
+          </PrivetRoute>
+        ),
       },
     ],
   },

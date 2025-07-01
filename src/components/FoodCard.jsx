@@ -38,41 +38,41 @@ const FoodCard = ({ food }) => {
 
   return (
     <div
-      className={`relative bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden transition-all duration-300 ease-in-out 
-        ${
-          isHovered
-            ? "transform -translate-y-2 shadow-xl dark:shadow-gray-700/50"
-            : "shadow-md dark:shadow-gray-900"
-        }`}
+      className={`relative bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden transition-all duration-300 ease-in-out
+    ${
+      isHovered
+        ? "transform -translate-y-1.5 shadow-lg dark:shadow-gray-700/40"
+        : "shadow-sm dark:shadow-gray-900/30"
+    }`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Favorite button */}
+      {/* Favorite Button */}
       <button
-        className={`absolute top-3 left-3 z-10 p-2 rounded-full transition-all 
-          ${
-            isFavorite
-              ? "text-red-500 dark:text-red-400 bg-white/90 dark:bg-gray-800/90"
-              : "text-gray-400 dark:text-gray-500 bg-white/70 dark:bg-gray-800/70 hover:bg-white/90 dark:hover:bg-gray-800/90"
-          }`}
+        className={`absolute top-2 left-2 z-10 p-1.5 rounded-full text-sm transition 
+      ${
+        isFavorite
+          ? "text-red-500 bg-white dark:bg-gray-800"
+          : "text-gray-400 bg-white/80 dark:bg-gray-700/80 hover:bg-white dark:hover:bg-gray-800"
+      }`}
         onClick={() => setIsFavorite(!isFavorite)}
         aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
       >
         <FaHeart className={isFavorite ? "fill-current" : ""} />
       </button>
 
-      {/* Food Image with hover effect */}
-      <div className="relative overflow-hidden h-56 group">
+      {/* Image */}
+      <div className="relative overflow-hidden h-40 group">
         <img
           src={food.foodImage}
           alt={food.foodName}
-          className={`w-full h-full object-cover transition-transform duration-700 ease-in-out 
-            ${isHovered ? "scale-110" : "scale-100"}`}
+          className={`w-full h-full object-cover transition-transform duration-700 ease-in-out ${
+            isHovered ? "scale-110" : "scale-100"
+          }`}
           loading="lazy"
         />
-        {/* Discount badge */}
         {food.price < food.originalPrice && (
-          <div className="absolute top-3 right-3 bg-gradient-to-r from-amber-500 to-amber-600 dark:from-amber-600 dark:to-amber-700 text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+          <div className="absolute top-2 right-2 bg-amber-500 text-white text-xs px-2 py-0.5 rounded-full font-semibold shadow">
             {Math.round(
               ((food.originalPrice - food.price) / food.originalPrice) * 100
             )}
@@ -81,73 +81,65 @@ const FoodCard = ({ food }) => {
         )}
       </div>
 
-      {/* Food Info */}
-      <div className="p-5">
-        <div className="flex justify-between items-start mb-2">
-          <h3 className="text-xl font-bold text-gray-800 dark:text-white truncate max-w-[70%]">
+      {/* Info */}
+      <div className="p-3">
+        <div className="flex justify-between items-center mb-1">
+          <h3 className="text-base font-semibold text-gray-800 dark:text-white truncate max-w-[70%]">
             {food.foodName}
           </h3>
           {getCategoryIcon()}
         </div>
 
-        {/* Rating and reviews */}
-        <div className="flex items-center mb-3">
-          <div className="flex mr-2">{renderStars(food.rating || 0)}</div>
-          <span className="text-gray-600 dark:text-gray-400 text-sm">
-            ({food.reviews || 0} reviews)
+        <div className="flex items-center mb-2">
+          <div className="flex mr-1">{renderStars(food.rating || 0)}</div>
+          <span className="text-xs text-gray-500 dark:text-gray-400">
+            ({food.reviews || 0})
           </span>
         </div>
 
-        {/* Description */}
-        {/* <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2">
-          {food.description || "Delicious food item with premium ingredients"}
-        </p> */}
-
-        {/* Price and quantity */}
-        <div className="flex justify-between items-center mb-4">
+        <div className="flex justify-between items-center mb-2">
           <div>
-            <span className="text-amber-600 dark:text-amber-400 font-bold text-xl">
+            <span className="text-amber-600 dark:text-amber-400 font-bold text-lg">
               Tk{food.price}
             </span>
             {food.originalPrice && (
-              <span className="text-gray-400 dark:text-gray-500 line-through text-sm ml-2">
+              <span className="text-xs line-through ml-1 text-gray-400 dark:text-gray-500">
                 Tk{food.originalPrice}
               </span>
             )}
           </div>
           <div
-            className={`text-sm px-2 py-1 rounded-full 
-            ${
-              food.quantity > 0
-                ? "bg-green-100 dark:bg-green-900/50 text-green-800 dark:text-green-200"
-                : "bg-red-100 dark:bg-red-900/50 text-red-800 dark:text-red-200"
-            }`}
+            className={`text-xs px-2 py-0.5 rounded-full 
+        ${
+          food.quantity > 0
+            ? "bg-green-100 dark:bg-green-900/50 text-green-700 dark:text-green-200"
+            : "bg-red-100 dark:bg-red-900/50 text-red-700 dark:text-red-200"
+        }`}
           >
             {food.quantity > 0 ? `${food.quantity} left` : "Sold out"}
           </div>
         </div>
 
-        {/* Buttons */}
-        <div className="flex space-x-3">
+        <div className="flex space-x-2">
           <button
-            className={`flex-1 flex items-center justify-center px-4 py-3 rounded-xl transition-all 
-              ${
-                food.quantity <= 0
-                  ? "bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed"
-                  : "bg-gradient-to-r from-amber-500 to-amber-600 dark:from-amber-600 dark:to-amber-700 text-white hover:from-amber-600 hover:to-amber-700 dark:hover:from-amber-700 dark:hover:to-amber-800 shadow-md hover:shadow-lg"
-              }`}
+            className={`flex-1 flex items-center justify-center px-3 py-1.5 rounded-lg text-sm transition 
+          ${
+            food.quantity <= 0
+              ? "bg-gray-300 dark:bg-gray-700 text-gray-500 cursor-not-allowed"
+              : "bg-amber-500 hover:bg-amber-600 text-white dark:bg-amber-600 dark:hover:bg-amber-700"
+          }`}
             disabled={food.quantity <= 0}
           >
-            <FaShoppingCart className="mr-2" />
-            {food.quantity <= 0 ? "Unavailable" : "Add to Cart"}
+            <FaShoppingCart className="mr-1" />
+            {food.quantity <= 0 ? "Unavailable" : "Add"}
           </button>
 
           <Link
             to={`/food/${food._id}`}
-            className="flex items-center justify-center px-4 py-3 border border-amber-500 dark:border-amber-400 text-amber-600 dark:text-amber-400 rounded-xl hover:bg-amber-50 dark:hover:bg-gray-700 transition-colors"
+            className="flex items-center justify-center px-3 py-1.5 border border-amber-500 dark:border-amber-400 text-sm rounded-lg text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-gray-700"
           >
-            <FaInfoCircle className="mr-2" />
-            Details
+            <FaInfoCircle className="mr-1" />
+            Info
           </Link>
         </div>
       </div>

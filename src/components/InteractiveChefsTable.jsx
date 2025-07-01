@@ -91,12 +91,12 @@ const InteractiveChefsTable = () => {
   const fallbackImage = "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1470&q=80";
 
   return (
-    <div className="bg-gradient-to-b from-amber-50 to-white dark:from-gray-900 dark:to-gray-950 py-20 relative overflow-hidden">
+    <div className="bg-gradient-to-b from-amber-50 to-white dark:from-gray-900 dark:to-gray-950 mt-10 relative overflow-hidden">
       <div className="absolute top-0 left-0 w-full h-16 bg-gradient-to-r from-orange-500 to-amber-600 dark:from-orange-700 dark:to-orange-900"></div>
       <div className="absolute top-1/4 right-0 w-32 h-32 rounded-full bg-amber-200/30 blur-3xl dark:bg-orange-400/10"></div>
       <div className="absolute bottom-0 left-0 w-48 h-48 rounded-full bg-orange-300/20 blur-3xl dark:bg-orange-500/10"></div>
 
-      <div className="max-w-7xl mx-auto px-4 relative z-10">
+      <div className="w-11/12 mx-auto px-4 relative z-10">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

@@ -11,12 +11,27 @@ import {
 import useAuth from "../Hooks/useAuth";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "../components/Loading";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { handleLoginUser, handleGoogleLoginUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const axiosSecure = useAxiosSecure();
+
+  const { data: users = [], isLoading } = useQuery({
+    queryKey: ["users", axiosSecure],
+    queryFn: () => axiosSecure.get("/users"),
+  });
+
+  console.log(users.data);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -41,6 +56,29 @@ const Login = () => {
     handleGoogleLoginUser()
       .then((result) => {
         const user = result.user;
+
+        const data = {
+          name: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+          role: "user",
+          status: "active",
+          uid: user.uid,
+          updatedAt: new Date().toISOString(),
+          createdAt: new Date().toISOString(),
+        };
+
+        // Put (upsert) by email
+        axiosSecure
+          .put("/users", data)
+          .then((res) => {
+            console.log(res.data);
+            navigate(location?.state || "/");
+          })
+          .catch((error) => {
+            console.error("Error creating user:", error);
+          });
+
         Swal.fire({
           position: "center",
           icon: "success",
@@ -56,9 +94,9 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 to-amber-200 dark:from-gray-900 dark:to-gray-800 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 to-amber-100 dark:from-gray-900 dark:to-gray-800 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-white">
+        <h2 className="text-center text-3xl font-extrabold text-gray-900 dark:text-white">
           Welcome Back
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600 dark:text-gray-300">
@@ -66,11 +104,14 @@ const Login = () => {
         </p>
       </div>
 
-      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+      <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md lg:max-w-lg">
         <div className="bg-white dark:bg-gray-900 py-8 px-6 shadow-lg rounded-lg sm:px-10 border border-gray-200 dark:border-gray-700">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Email address
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -90,7 +131,10 @@ const Login = () => {
             </div>
 
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              >
                 Password
               </label>
               <div className="mt-1 relative rounded-md shadow-sm">
@@ -112,7 +156,11 @@ const Login = () => {
                     onClick={() => setShowPassword(!showPassword)}
                     className="text-amber-500 hover:text-amber-400"
                   >
-                    {showPassword ? <FaEyeSlash className="h-5 w-5" /> : <FaEye className="h-5 w-5" />}
+                    {showPassword ? (
+                      <FaEyeSlash className="h-5 w-5" />
+                    ) : (
+                      <FaEye className="h-5 w-5" />
+                    )}
                   </button>
                 </div>
               </div>
@@ -125,12 +173,18 @@ const Login = () => {
                   type="checkbox"
                   className="h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300 rounded"
                 />
-                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700 dark:text-gray-300">
+                <label
+                  htmlFor="remember-me"
+                  className="ml-2 block text-sm text-gray-700 dark:text-gray-300"
+                >
                   Remember me
                 </label>
               </div>
               <div className="text-sm">
-                <a href="#" className="font-medium text-amber-600 hover:text-amber-500">
+                <a
+                  href="#"
+                  className="font-medium text-amber-600 hover:text-amber-500"
+                >
                   Forgot password?
                 </a>
               </div>

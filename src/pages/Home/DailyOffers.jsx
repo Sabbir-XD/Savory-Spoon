@@ -18,7 +18,7 @@ const DailyOffer = () => {
       discount: "13% Off",
       title: "Beef Masala Salad",
       price: "220",
-      image: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c",
+      image: "https://i.ibb.co/8n866bSm/offer-1.jpg",
       description: "Fresh beef with masala spices on a bed of mixed greens",
     },
     {
@@ -26,8 +26,7 @@ const DailyOffer = () => {
       discount: "10% Off",
       title: "Chicken Caesar Wrap",
       price: "180",
-      image:
-        "https://i.ibb.co/DDXk0Szm/grilled-chicken-caesar-wrap.webp",
+      image: "https://i.ibb.co/DDXk0Szm/grilled-chicken-caesar-wrap.webp",
       description:
         "Grilled chicken, romaine lettuce and parmesan in a soft wrap",
     },
@@ -36,7 +35,7 @@ const DailyOffer = () => {
       discount: "15% Off",
       title: "Vegetable Stir Fry",
       price: "120",
-      image: "https://images.unsplash.com/photo-1626700051175-6818013e1d4f",
+      image: "https://i.ibb.co/Pz3MDmvC/offer-3.jpg",
       description: "Fresh seasonal vegetables stir-fried with garlic sauce",
     },
     {
@@ -44,7 +43,7 @@ const DailyOffer = () => {
       discount: "20% Off",
       title: "Margherita Pizza",
       price: "340",
-      image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38",
+      image: "https://i.ibb.co/tTBzJKQ4/offer-4.jpg",
       description: "Classic pizza with tomato sauce, mozzarella and basil",
     },
     {
@@ -52,8 +51,7 @@ const DailyOffer = () => {
       discount: "5% Off",
       title: "Chocolate Brownie",
       price: "200",
-      image:
-        "https://img.freepik.com/free-photo/chocolate-brownies-sackcloth-coffee-beans-wooden-table_1150-20910.jpg?semt=ais_hybrid&w=740",
+      image: "https://i.ibb.co/ZRZbBNWs/offer-5.jpg",
       description: "Warm chocolate brownie with vanilla ice cream",
     },
     {
@@ -61,8 +59,7 @@ const DailyOffer = () => {
       discount: "12% Off",
       title: "Avocado Toast",
       price: "120",
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnmqONlrqyavI-eBSRE8O-jdxXxqE3wRmMdQ&s",
+      image: "https://i.ibb.co/7dnHb9VG/offer-6.jpg",
       description: "Sourdough bread with mashed avocado and cherry tomatoes",
     },
     {
@@ -70,7 +67,7 @@ const DailyOffer = () => {
       discount: "8% Off",
       title: "Beef Burger",
       price: "260",
-      image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
+      image: "https://i.ibb.co/s9MXD3p2/offer-7.jpg",
       description: "Juicy beef patty with cheese, lettuce and special sauce",
     },
     {
@@ -78,7 +75,7 @@ const DailyOffer = () => {
       discount: "25% Off",
       title: "Fruit Smoothie",
       price: "110",
-      image: "https://images.unsplash.com/photo-1505576399279-565b52d4ac71",
+      image: "https://i.ibb.co/zTntx5kR/offer-8.webp",
       description: "Mixed berry smoothie with banana and yogurt",
     },
     {
@@ -86,8 +83,7 @@ const DailyOffer = () => {
       discount: "18% Off",
       title: "Sushi Platter",
       price: "230",
-      image:
-        "https://img.freepik.com/premium-photo/assorted-sushi-platter-elegant-table-setting_711700-21906.jpg",
+      image: "https://i.ibb.co/RGPgNrVP/offer-9.jpg",
       description: "Assorted fresh sushi with wasabi and soy sauce",
     },
     {
@@ -95,26 +91,32 @@ const DailyOffer = () => {
       discount: "7% Off",
       title: "Pasta Carbonara",
       price: "120",
-      image: "https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb",
+      image: "https://i.ibb.co/gZHsqJ17/offer-10.jpg",
       description: "Spaghetti with creamy egg sauce, pancetta and parmesan",
     },
   ];
 
   return (
-    <div className="relative max-w-full mx-auto bg-white dark:bg-gray-800 rounded-xl mt-10 mb-10 shadow-lg dark:shadow-black/40 overflow-hidden transition-all duration-500">
+    <div className="relative max-w-full mx-auto bg-white dark:bg-gray-800 rounded-xl mt-10 shadow-lg dark:shadow-black/40 overflow-hidden transition-all duration-500">
       {/* Header */}
       <div className="bg-gradient-to-r from-orange-200 to-orange-300 dark:from-[#7a341e] dark:to-[#78350f] p-6 md:p-8 transition-all duration-500">
         <div className="flex flex-col md:flex-row justify-between space-y-4 md:space-y-0">
           <div>
             <div className="flex items-center space-x-2">
-              <FaFire className="text-amber-500 dark:text-amber-400" size={28} />
+              <FaFire
+                className="text-amber-500 dark:text-amber-400"
+                size={28}
+              />
               <h2 className="text-2xl text-orange-600 dark:text-orange-300 font-bold">
                 Daily Offer
               </h2>
             </div>
             <p className="mt-4 text-gray-800 dark:text-gray-100 text-2xl md:text-3xl font-bold">
               Up to{" "}
-              <span className="text-orange-600 dark:text-orange-400">75% off</span> for this day
+              <span className="text-orange-600 dark:text-orange-400">
+                75% off
+              </span>{" "}
+              for this day
             </p>
           </div>
 
