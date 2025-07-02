@@ -97,67 +97,69 @@ const DailyOffer = () => {
   ];
 
   return (
-    <div className="relative max-w-full mx-auto bg-white dark:bg-gray-800 rounded-xl mt-10 shadow-lg dark:shadow-black/40 overflow-hidden transition-all duration-500">
+    <div className="relative lg:w-11/12 mx-auto px-2 bg-white dark:bg-gray-800 rounded-2xl mt-10 shadow-xl dark:shadow-black/50 overflow-hidden transition-all duration-500">
       {/* Header */}
-      <div className="bg-gradient-to-r from-orange-200 to-orange-300 dark:from-[#7a341e] dark:to-[#78350f] p-6 md:p-8 transition-all duration-500">
-        <div className="flex flex-col md:flex-row justify-between space-y-4 md:space-y-0">
+      <div className="bg-gradient-to-r from-orange-200 to-orange-300 dark:from-[#7a341e] dark:to-[#78350f] px-6 md:px-10 py-6 md:py-8 transition-all duration-500">
+        <div className="flex flex-col md:flex-row justify-between gap-4 md:items-center">
+          {/* Left Title */}
           <div>
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center gap-2 mb-2">
               <FaFire
                 className="text-amber-500 dark:text-amber-400"
-                size={28}
+                size={24}
               />
-              <h2 className="text-2xl text-orange-600 dark:text-orange-300 font-bold">
-                Daily Offer
+              <h2 className="text-2xl font-bold text-orange-600 dark:text-orange-300">
+                Daily Offers
               </h2>
             </div>
-            <p className="mt-4 text-gray-800 dark:text-gray-100 text-2xl md:text-3xl font-bold">
-              Up to{" "}
+            <p className="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-100">
+              Get up to{" "}
               <span className="text-orange-600 dark:text-orange-400">
                 75% off
               </span>{" "}
-              for this day
+              — Today Only!
             </p>
           </div>
 
-          <div className="flex flex-col items-end space-y-4">
-            <div className="flex items-center space-x-1 bg-orange-500 dark:bg-orange-600 px-4 py-1 rounded-full text-white shadow-md">
+          {/* Right Buttons */}
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 px-4 py-1 bg-orange-500 dark:bg-orange-600 text-white rounded-full shadow text-sm font-medium">
               <FaRegClock size={16} />
-              <span className="text-sm font-medium">Today only</span>
+              Today only
             </div>
 
-            {/* Navigation Arrows */}
-            <div className="flex space-x-2">
+            {/* Nav Arrows */}
+            <div className="flex gap-2">
               <button
                 ref={prevRef}
-                className="bg-orange-500 dark:bg-orange-600 p-2 rounded-full shadow-md cursor-pointer hover:bg-black dark:hover:bg-orange-800 hover:scale-110 transition duration-300"
-                aria-label="Previous offer"
+                className="p-2 rounded-full bg-orange-500 dark:bg-orange-600 text-white hover:bg-black dark:hover:bg-orange-700 hover:scale-110 transition"
+                aria-label="Previous"
               >
-                <FaArrowLeftLong className="text-white" size={16} />
+                <FaArrowLeftLong size={16} />
               </button>
               <button
                 ref={nextRef}
-                className="bg-black dark:bg-gray-900 p-2 rounded-full shadow-md cursor-pointer hover:bg-orange-500 dark:hover:bg-orange-700 hover:scale-110 transition duration-300"
-                aria-label="Next offer"
+                className="p-2 rounded-full bg-black dark:bg-gray-900 text-white hover:bg-orange-500 dark:hover:bg-orange-700 hover:scale-110 transition"
+                aria-label="Next"
               >
-                <FaArrowRightLong className="text-white" size={16} />
+                <FaArrowRightLong size={16} />
               </button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Offers Slider */}
-      <div className="p-4 relative bg-gray-100 dark:bg-gray-900/30 backdrop-blur-sm transition-all duration-500">
+      {/* Slider */}
+      <div className="p-6 bg-gray-100 dark:bg-gray-900/30 backdrop-blur-sm transition duration-500">
         <Swiper
           spaceBetween={20}
           breakpoints={{
-            0: { slidesPerView: 1 },
-            640: { slidesPerView: 2 },
-            1024: { slidesPerView: 3 },
+            0: { slidesPerView: 2 },
+            640: { slidesPerView: 3 },
+            1024: { slidesPerView: 4 },
           }}
           autoplay={{
-            delay: 3000,
+            delay: 3500,
             disableOnInteraction: false,
           }}
           navigation={{

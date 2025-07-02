@@ -60,7 +60,7 @@ const MyOrders = () => {
   return (
     <div>
       <BackgroundTitle title="My Orders" />
-      <div className="container mx-auto px-2 sm:px-6 lg:px-8 py-6">
+      <div className="container mx-auto dark:bg-gray-900 px-2 sm:px-6 lg:px-8 py-6">
         <div className="flex flex-col md:flex-row justify-between items-center mb-4">
           <motion.div
             initial={{ opacity: 0, x: -20 }}

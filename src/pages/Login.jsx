@@ -27,8 +27,6 @@ const Login = () => {
     queryFn: () => axiosSecure.get("/users"),
   });
 
-  console.log(users.data);
-
   if (isLoading) {
     return <Loading />;
   }
@@ -72,7 +70,7 @@ const Login = () => {
         axiosSecure
           .put("/users", data)
           .then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             navigate(location?.state || "/");
           })
           .catch((error) => {

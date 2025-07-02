@@ -22,7 +22,6 @@ const useApplicationApi = () => {
 
   // Delete a specific food
   const deleteFood = async ({id, email}) => {
-    console.log(email);
     try {
       const res = await axiosSecure.delete(`/foods/${id}?email=${email}`);
       return res.data;

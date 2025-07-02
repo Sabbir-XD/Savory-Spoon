@@ -90,7 +90,7 @@ const Banner = () => {
       >
         {banners.map((banner) => (
           <SwiperSlide key={banner.id}>
-            <div className="relative h-[60vh] sm:h-[70vh] lg:h-[80vh] min-h-[400px] lg:min-h-[600px] w-full">
+            <div className="relative h-[60vh] sm:h-[70vh] lg:h-[70vh] min-h-[400px] lg:min-h-[550px] w-full">
               {/* Gradient Overlay */}
               <div
                 className={`absolute inset-0 bg-gradient-to-b ${banner.accentColor} via-black/60 to-black/70`}

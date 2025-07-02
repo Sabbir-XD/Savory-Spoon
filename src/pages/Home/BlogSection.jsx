@@ -59,10 +59,10 @@ const BlogSection = () => {
   ];
 
   return (
-    <div className="mt-10 bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <div className="mt-10 mb-5 bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
       <div className="w-11/12 mx-auto">
         {/* Section Header */}
-        <div className="text-center mb-12">
+        <div className="text-center pt-10 mb-12">
           <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-3">
             Latest{" "}
             <span className="text-orange-400 dark:text-orange-300">

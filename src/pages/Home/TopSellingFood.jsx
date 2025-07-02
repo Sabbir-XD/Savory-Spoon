@@ -14,7 +14,7 @@ const TopSellingFood = () => {
   }, []);
 
   return (
-    <div className="w-11/12 mx-auto mt-10 px-4">
+    <div className="lg:w-11/12 mx-auto mt-10 px-2">
       <div className="text-center mb-8">
         <h2 className="text-3xl font-bold">
           🍽️ Top <span className="text-orange-400">Selling Foods</span>
@@ -26,7 +26,7 @@ const TopSellingFood = () => {
         </p>
       </div>
 
-      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid gap-6 grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {topFoods.map((food) => (
           <FoodCard key={food._id} food={food} />
         ))}

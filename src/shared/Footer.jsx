@@ -77,36 +77,36 @@ const Footer = () => {
             </h3>
             <ul className="space-y-2">
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/"
                   className="text-gray-300 hover:text-amber-400 transition-colors flex items-center"
                 >
                   <span className="w-2 h-2 bg-amber-500 rounded-full mr-2"></span>
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/AllFoods"
                   className="text-gray-300 hover:text-amber-400 transition-colors flex items-center"
                 >
                   <span className="w-2 h-2 bg-amber-500 rounded-full mr-2"></span>
-                  Our Menu
-                </a>
+                  ALL Foods
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  to="/gallery"
                   className="text-gray-300 hover:text-amber-400 transition-colors flex items-center"
                 >
                   <span className="w-2 h-2 bg-amber-500 rounded-full mr-2"></span>
                   Gallery
-                </a>
+                </Link>
               </li>
               <li>
                 <a
-                  href="#"
-                  className="text-gray-300 hover:text-amber-400 transition-colors flex items-center"
+                  href="#newsletter"
+                  className="text-gray-300 scroll-smooth hover:text-amber-400 transition-colors flex items-center"
                 >
                   <span className="w-2 h-2 bg-amber-500 rounded-full mr-2"></span>
                   Reservations
