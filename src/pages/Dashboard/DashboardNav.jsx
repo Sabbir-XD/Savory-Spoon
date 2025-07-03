@@ -112,7 +112,7 @@ const DashboardNav = ({ isOpen, onClose, isMobile }) => {
             <Link to="/" className="text-2xl font-bold text-amber-400">
               Savory Spoon
             </Link>
-            <div className="ml-3"><Dark/></div>
+            <div className="ml-3 hidden md:inline"><Dark/></div>
           </div>
           {isMobile && (
             <button

@@ -1,8 +1,7 @@
 import { useRef } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Navigation, Autoplay } from "swiper/modules";
+import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { FaFire, FaRegClock } from "react-icons/fa";
 import { FaArrowLeftLong, FaArrowRightLong } from "react-icons/fa6";
@@ -27,8 +26,7 @@ const DailyOffer = () => {
       title: "Chicken Caesar Wrap",
       price: "180",
       image: "https://i.ibb.co/DDXk0Szm/grilled-chicken-caesar-wrap.webp",
-      description:
-        "Grilled chicken, romaine lettuce and parmesan in a soft wrap",
+      description: "Grilled chicken, romaine lettuce and parmesan in a soft wrap",
     },
     {
       id: 3,
@@ -97,49 +95,43 @@ const DailyOffer = () => {
   ];
 
   return (
-    <div className="relative lg:w-11/12 mx-auto px-2 bg-white dark:bg-gray-800 rounded-2xl mt-10 shadow-xl dark:shadow-black/50 overflow-hidden transition-all duration-500">
+    <div className="relative lg:w-11/12 mx-auto px-1 bg-white dark:bg-gray-900 rounded-3xl mt-10 shadow-xl dark:shadow-lg overflow-hidden transition-all duration-500">
       {/* Header */}
-      <div className="bg-gradient-to-r from-orange-200 to-orange-300 dark:from-[#7a341e] dark:to-[#78350f] px-6 md:px-10 py-6 md:py-8 transition-all duration-500">
-        <div className="flex flex-col md:flex-row justify-between gap-4 md:items-center">
-          {/* Left Title */}
+      <div className="bg-gradient-to-r from-orange-200 to-orange-300 dark:from-[#7a341e] dark:to-[#78350f] px-6 md:px-10 py-6 md:py-8">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+          {/* Left title */}
           <div>
-            <div className="flex items-center gap-2 mb-2">
-              <FaFire
-                className="text-amber-500 dark:text-amber-400"
-                size={24}
-              />
-              <h2 className="text-2xl font-bold text-orange-600 dark:text-orange-300">
+            <div className="flex items-center gap-2 mb-1">
+              <FaFire className="text-amber-600 dark:text-amber-400" size={22} />
+              <h2 className="text-2xl md:text-3xl font-extrabold text-orange-700 dark:text-orange-300">
                 Daily Offers
               </h2>
             </div>
-            <p className="text-lg md:text-xl font-semibold text-gray-800 dark:text-gray-100">
-              Get up to{" "}
-              <span className="text-orange-600 dark:text-orange-400">
-                75% off
-              </span>{" "}
-              — Today Only!
+            <p className="text-base md:text-lg text-gray-800 dark:text-gray-200 font-medium">
+              Save up to{" "}
+              <span className="text-orange-600 dark:text-orange-400 font-bold">75%</span>{" "}
+              – Only for today!
             </p>
           </div>
 
-          {/* Right Buttons */}
+          {/* Right controls */}
           <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 px-4 py-1 bg-orange-500 dark:bg-orange-600 text-white rounded-full shadow text-sm font-medium">
+            <div className="flex items-center gap-2 px-4 py-1 bg-orange-500 dark:bg-orange-600 text-white rounded-full shadow-sm text-sm font-medium">
               <FaRegClock size={16} />
               Today only
             </div>
 
-            {/* Nav Arrows */}
             <div className="flex gap-2">
               <button
                 ref={prevRef}
-                className="p-2 rounded-full bg-orange-500 dark:bg-orange-600 text-white hover:bg-black dark:hover:bg-orange-700 hover:scale-110 transition"
+                className="p-2 rounded-full bg-orange-500 dark:bg-orange-600 text-white hover:bg-black dark:hover:bg-orange-700 hover:scale-105 transition"
                 aria-label="Previous"
               >
                 <FaArrowLeftLong size={16} />
               </button>
               <button
                 ref={nextRef}
-                className="p-2 rounded-full bg-black dark:bg-gray-900 text-white hover:bg-orange-500 dark:hover:bg-orange-700 hover:scale-110 transition"
+                className="p-2 rounded-full bg-black dark:bg-gray-800 text-white hover:bg-orange-500 dark:hover:bg-orange-700 hover:scale-105 transition"
                 aria-label="Next"
               >
                 <FaArrowRightLong size={16} />
@@ -149,8 +141,8 @@ const DailyOffer = () => {
         </div>
       </div>
 
-      {/* Slider */}
-      <div className="p-6 bg-gray-100 dark:bg-gray-900/30 backdrop-blur-sm transition duration-500">
+      {/* Swiper Slider */}
+      <div className="p-2 md:p-6 bg-gray-100 dark:bg-gray-800/40 backdrop-blur-sm transition">
         <Swiper
           spaceBetween={20}
           breakpoints={{
