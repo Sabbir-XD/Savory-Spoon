@@ -18,7 +18,7 @@ const AddFood = () => {
 
   const categories = [
     "Appetizer",
-    "Rice Menu",
+    "Rice Menu", 
     "Dessert",
     "Beverage",
     "Snack",

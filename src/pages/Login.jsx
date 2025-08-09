@@ -43,7 +43,7 @@ const Login = () => {
           title: "Login Successfully!",
           icon: "success",
         });
-        navigate(location?.state || "/");
+        navigate( location?.state || "/");
       })
       .catch((error) => {
         toast.error(error.message);

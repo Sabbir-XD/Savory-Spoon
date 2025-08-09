@@ -26,7 +26,8 @@ const DailyOffer = () => {
       title: "Chicken Caesar Wrap",
       price: "180",
       image: "https://i.ibb.co/DDXk0Szm/grilled-chicken-caesar-wrap.webp",
-      description: "Grilled chicken, romaine lettuce and parmesan in a soft wrap",
+      description:
+        "Grilled chicken, romaine lettuce and parmesan in a soft wrap",
     },
     {
       id: 3,
@@ -102,14 +103,19 @@ const DailyOffer = () => {
           {/* Left title */}
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <FaFire className="text-amber-600 dark:text-amber-400" size={22} />
+              <FaFire
+                className="text-amber-600 dark:text-amber-400"
+                size={22}
+              />
               <h2 className="text-2xl md:text-3xl font-extrabold text-orange-700 dark:text-orange-300">
                 Daily Offers
               </h2>
             </div>
             <p className="text-base md:text-lg text-gray-800 dark:text-gray-200 font-medium">
               Save up to{" "}
-              <span className="text-orange-600 dark:text-orange-400 font-bold">75%</span>{" "}
+              <span className="text-orange-600 dark:text-orange-400 font-bold">
+                75%
+              </span>{" "}
               – Only for today!
             </p>
           </div>
