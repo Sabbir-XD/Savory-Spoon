@@ -50,14 +50,13 @@ const AuthProvider = ({ children }) => {
         });
       })
       .catch((error) => {
-        console.error("Error signing out:", error);
+        // console.error("Error signing out:", error);
         toast.error("Error signing out:", error);
       });
   };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      // console.log(currentUser);
       setUser(currentUser);
       setLoading(false);
     });
